@@ -1,19 +1,20 @@
 import { SetStateAction } from "react";
 import { allWeatherData, cityCordinatesInfo, fetchCityName } from "./Api";
-import { ICityListData, Icordinates, IdailyWeatherData } from "./type/types";
-import { ISelectedCriteria } from "./type";
+import { ICityDataMapped, ICityListData, IWeatherDataMapped, Icordinates, IdailyWeatherData } from "./type/types";
+import { ISelectedCriteria, WeatherCity } from "./type";
 import { weekly } from "./constants";
 
 //fetch city name on the basis of latitude and logitude.
 export const getCityName = async (
   latitude: number,
   longitude: number,
-  cityName: any,
-  setCityName: any
+  cityName: ICityDataMapped,
+  setCityName: React.Dispatch<SetStateAction<ICityDataMapped>>
 ) => {
   try {
     const data = await fetchCityName({ latitude, longitude });
-    setCityName({ ...cityName, ...data });
+    const mappedData = mapAPIData(data , WeatherCity.City)
+    setCityName({ ...cityName, ...mappedData });
   } catch (error) {
     console.log("getCityName: something went wrong ", error);
   }
@@ -22,13 +23,15 @@ export const getCityName = async (
 //fetch temperature on the basis of latitude and logitude.
 export const fetchWeatherData = async (
   cordinates: Icordinates,
-  setCurrentWeather: any,
-  currentWeather: any,
+  setCurrentWeather: React.Dispatch<SetStateAction<IWeatherDataMapped>>,
+  currentWeather: IWeatherDataMapped,
   setDailyWeatherData?: React.Dispatch<SetStateAction<IdailyWeatherData[]>>
 ) => {
   try {
     const data = await allWeatherData(cordinates, 16);
-    setCurrentWeather({ ...currentWeather, ...data });
+    console.log("data", data)
+    const mappedAPIData = mapAPIData(data , WeatherCity.Weather)
+    setCurrentWeather({ ...currentWeather, ...mappedAPIData });
     if (setDailyWeatherData) {
       const reformatedData = reformatTimeWiseWeather(data);
       setDailyWeatherData([...reformatedData]);
@@ -37,6 +40,33 @@ export const fetchWeatherData = async (
     console.log("fetchWeatherData: something went wrong ", error);
   }
 };
+
+//format weather data
+export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityDataMapped => {
+  let reformatedData : IWeatherDataMapped | ICityDataMapped;
+  if (type === WeatherCity.Weather) {
+    const { current_weather, hourly, latitude, longitude, hourly_units } = data;
+    reformatedData = {
+      currentTemperature: current_weather?.temperature,
+      temperatureExtended: hourly?.temperature_2m,
+      timeExtended: hourly?.time,
+      unit: hourly_units?.temperature_2m,
+      latitude,
+      longitude,
+    }
+  } else if (type === WeatherCity.City) {
+    const { results } = data;
+    reformatedData = {
+      country: results?.[0]?.components?.country,
+      district: results?.[0]?.components?.state_district,
+      suburb: results?.[0]?.components?.suburb,
+    }
+  }
+  //@ts-ignore
+  console.log("reformatedData" , reformatedData)
+  //@ts-ignore
+  return reformatedData;
+}
 
 //fetch city lat & lon and after that fetch wetather data
 export const fetchWeatherDataForCity = async (
@@ -195,7 +225,7 @@ export const handleSelctionCriteria = (
   setSelectedCriteriaData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>,
   dailyWeatherData: IdailyWeatherData[]
 ) => {
-  console.log("🚀 ~ file: helper.ts:196 ~ selectedCriteria:", selectedCriteria)
+  // console.log("🚀 ~ file: helper.ts:196 ~ selectedCriteria:", selectedCriteria)
   switch (selectedCriteria) {
     case ISelectedCriteria.Today:
       setSelectedCriteriaData(

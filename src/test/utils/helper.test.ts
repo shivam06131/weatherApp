@@ -47,13 +47,15 @@ test("it should properly exicute getCityName", async () => {
 
   //try block
   expect(
+    //@ts-ignore
     await getCityName(123.123, 123.123, "testCity", jest.fn())
-  ).toBeUndefined();
-  expect(fetchCityNameApiSpy).toHaveBeenCalledTimes(1);
-  //catch block
-  expect(
-    await getCityName(123.123, 123.123, "testCity", jest.fn())
-  ).toBeUndefined();
+    ).toBeUndefined();
+    expect(fetchCityNameApiSpy).toHaveBeenCalledTimes(1);
+    //catch block
+    expect(
+      //@ts-ignore
+      await getCityName(123.123, 123.123, "testCity", jest.fn())
+      ).toBeUndefined();
   expect(fetchCityNameApiSpy).toHaveBeenCalledTimes(2);
 });
 
@@ -68,6 +70,7 @@ test("it should properly exicute fetchWeatherData", async () => {
     await fetchWeatherData(
       { latitude: 123.123, longitude: 123.123 },
       jest.fn(),
+      //@ts-ignore
       "test-weather",
       jest.fn()
     )
@@ -78,6 +81,7 @@ test("it should properly exicute fetchWeatherData", async () => {
     await fetchWeatherData(
       { latitude: 123.123, longitude: 123.123 },
       jest.fn(),
+      //@ts-ignore
       "test-weather",
       jest.fn()
     )

@@ -82,3 +82,18 @@ export interface ICityListData {
   stateDistrict: string | any;
   temperature: number;
 }
+
+export interface ICityDataMapped {
+  country: string;
+  district: string;
+  suburb: string;
+}
+
+export interface IWeatherDataMapped {
+  currentTemperature: number;
+  temperatureExtended: number[];
+  timeExtended: string[];
+  unit: string;
+  latitude: number,
+  longitude: number,
+}

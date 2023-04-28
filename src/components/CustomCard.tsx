@@ -6,7 +6,12 @@ import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import CustomTypography from "./CustomTypography";
-import { ICustomCardProps, Icordinates } from "../utils/type/types";
+import {
+  ICityDataMapped,
+  ICustomCardProps,
+  IWeatherDataMapped,
+  Icordinates,
+} from "../utils/type/types";
 import { fetchWeatherData, getCurrentLocation } from "../utils/helper";
 
 const CustomCard = (props: ICustomCardProps) => {
@@ -15,8 +20,19 @@ const CustomCard = (props: ICustomCardProps) => {
     longitude: 0,
   });
   //api data
-  const [currentWeather, setCurrentWeather] = useState<any>({});
-  const [cityName, setCityName] = useState<any>({});
+  const [currentWeather, setCurrentWeather] = useState<IWeatherDataMapped>({
+    currentTemperature: 0,
+    temperatureExtended: [0],
+    timeExtended: [""],
+    unit: "",
+    latitude: 0,
+    longitude: 0,
+  });
+  const [cityName, setCityName] = useState<ICityDataMapped>({
+    country: "",
+    district: "",
+    suburb: "",
+  });
 
   useEffect(() => {
     getCurrentLocation(cityName, setCityName, cordinates, setCordinates);
@@ -35,14 +51,14 @@ const CustomCard = (props: ICustomCardProps) => {
   useEffect(() => {
     fetchWeatherDataWrapper();
     //To fetch Live data
-    setInterval(() => {
-      fetchWeatherDataWrapper();
-    }, 10000);
+    // setInterval(() => {
+    fetchWeatherDataWrapper();
+    // }, 10000);
   }, [cordinates]);
 
   return (
-    <div style={{ textAlign: "center"  }}>
-      <Grid container spacing={2} style={{ margin: "auto", width : "100%"}}>
+    <div style={{ textAlign: "center" }}>
+      <Grid container spacing={2} style={{ margin: "auto", width: "100%" }}>
         <Grid
           item
           xs={1}
@@ -50,7 +66,7 @@ const CustomCard = (props: ICustomCardProps) => {
           md={3.5}
           lg={4}
           xl={4.5}
-          style={{ height: "auto", width : "100%" }}
+          style={{ height: "auto", width: "100%" }}
         ></Grid>
         <Grid
           item
@@ -62,9 +78,7 @@ const CustomCard = (props: ICustomCardProps) => {
           style={{ height: "auto", paddingLeft: "0px" }}
           sx={{ pl: 0 }}
         >
-          <Card
-            sx={{ backgroundColor: "#dae3fd", height: "auto" }}
-          >
+          <Card sx={{ backgroundColor: "#dae3fd", height: "auto" }}>
             <CardContent>
               <Box
                 display={"flex"}
@@ -72,23 +86,21 @@ const CustomCard = (props: ICustomCardProps) => {
                 alignItems={"center"}
               >
                 <CustomTypography
-                  condition={cityName?.results?.[0]?.components?.suburb}
-                  typegraphyData={cityName?.results?.[0]?.components?.suburb}
+                  condition={Boolean(cityName?.suburb)}
+                  typegraphyData={cityName?.suburb}
                   typegraphystyles={{ fontSize: 26 }}
                   loaderHeightWidth={"35"}
                 />
                 <CustomTypography
-                  condition={currentWeather?.current_weather?.temperature}
+                  condition={Boolean(currentWeather?.currentTemperature)}
                   typegraphyData={
                     props?.isCustomised
-                      ? props?.customisedData
-                      : currentWeather?.current_weather?.temperature
+                      ? (props?.customisedData as string)
+                      : currentWeather?.currentTemperature
                   }
-                  temperatureData={
-                    currentWeather?.hourly_units?.temperature_2m || ""
-                  }
+                  temperatureData={currentWeather?.unit || ""}
                   additionalProps={{
-                    "gutterBottom": true
+                    gutterBottom: true,
                   }}
                   typegraphystyles={{ fontSize: 36 }}
                   loaderHeightWidth={"50"}
@@ -114,18 +126,14 @@ const CustomCard = (props: ICustomCardProps) => {
                 loaderHeightWidth={"40"}
               />
               <CustomTypography
-                condition={Boolean(cityName?.results?.[0]?.components?.country)}
-                typegraphyData={cityName?.results?.[0]?.components?.country}
+                condition={Boolean(cityName?.country)}
+                typegraphyData={cityName?.country}
                 typegraphystyles={{ fontSize: 36, mt: 1.5, mb: 0 }}
                 loaderHeightWidth={"50"}
               />
               <CustomTypography
-                condition={Boolean(
-                  cityName?.results?.[0]?.components?.state_district
-                )}
-                typegraphyData={
-                  cityName?.results?.[0]?.components?.state_district
-                }
+                condition={Boolean(cityName?.district)}
+                typegraphyData={cityName?.district}
                 typegraphystyles={{ mb: 1.5, fontSize: 16 }}
                 loaderHeightWidth={"50"}
               />
