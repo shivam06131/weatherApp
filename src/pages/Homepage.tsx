@@ -20,29 +20,30 @@ const Homepage = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [debouncedSearchText, setDebouncedSearchText] = useState<string[]>([]);
   //handle all the data for weather
-  const [dailyWeatherData, setDailyWeatherData] = useState<IdailyWeatherData[]>(
-    []
-  );
+  // const [dailyWeatherData, setDailyWeatherData] = useState<IdailyWeatherData[]>(
+  //   []
+  // );
   //for second card
   const [customisedData, setCustomisedData] = useState<number>(0);
   //city wise data
   const [cityListData, setCityListData] = useState<ICityListData[]>([ 
     ...(JSON.parse(localStorage.getItem("cityListData") as string) ?? []),
   ]);
+  console.log("cityListData" ,cityListData)
   //loader
   const [loader, setLoader] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   //redux
-  const weatherData = useSelector((state : any) => state.dailyWeatherData);
+  const storeDailyWeatherData = useSelector((state : any) => state.dailyWeatherData);
   const storeSelectedTime = useSelector((state : any) => state.selectedTime);
   const storeSelectedCriteria = useSelector((state : any) => state.selectedCriteria);
   const storeSelectedCriteriaData = useSelector((state : any) => state.selectedCriteriaData);
   
   
-  useEffect(() => {
-    weatherData && setDailyWeatherData(weatherData)
-  },[weatherData])
+  // useEffect(() => {
+  //   storeDailyWeatherData && setDailyWeatherData(storeDailyWeatherData)
+  // },[storeDailyWeatherData])
   
   //Debouncing
   useEffect(() => {
@@ -82,7 +83,7 @@ const Homepage = () => {
   useEffect(() => {
    const criteriaSpecificData =  handleSelctionCriteria(
     storeSelectedCriteria,
-      dailyWeatherData
+    storeDailyWeatherData
     );
     criteriaSpecificData && dispatch(updateSelectedCriteriaData([...criteriaSpecificData as []]))
   }, [storeSelectedCriteria]);
