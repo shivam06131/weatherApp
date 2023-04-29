@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { ICity, ICityCardContainer } from "../utils/type/types";
 import { Button, Grid, Typography } from "@mui/material";
 import CityCard from "./CityCard";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCityListData } from "../redux/reducers";
 
-const CityCardContainer = (props: ICityCardContainer) => {
+const CityCardContainer = () => {
+const dispatch  = useDispatch()
 
+const storeCityListData = useSelector(
+  (state: any) => state.cityListData
+);
 
   return (
     <div>
-      {props?.cityListData?.length > 0 && (
+      {storeCityListData?.length > 0 && (
         <div
           style={{
             display: "flex",
@@ -29,7 +35,7 @@ const CityCardContainer = (props: ICityCardContainer) => {
             variant="outlined"
             style={{ padding: "0px 15px", height: "56px" }}
             onClick={() => {
-              props?.setCityListData([]);
+              dispatch(updateCityListData([]))
               localStorage.removeItem("cityListData");
             }}
           >
@@ -37,7 +43,7 @@ const CityCardContainer = (props: ICityCardContainer) => {
           </Button>
         </div>
       )}
-      {props?.cityListData?.length > 0 && (
+      {storeCityListData?.length > 0 && (
         <Grid
           container
           spacing={3}
@@ -50,7 +56,7 @@ const CityCardContainer = (props: ICityCardContainer) => {
             width: "100%"
           }}
         >
-          {props?.cityListData?.map((city: ICity) => {
+          {storeCityListData?.map((city: ICity) => {
             return (
               <Grid
                 key={city?.currentCity ?? "" + city?.Country}

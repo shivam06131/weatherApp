@@ -3,7 +3,7 @@ import { allWeatherData, cityCordinatesInfo, fetchCityName } from "./Api";
 import { ICityDataMapped, ICityListData, IWeatherDataMapped, Icordinates, IdailyWeatherData } from "./type/types";
 import { ISelectedCriteria, WeatherCity } from "./type";
 import { weekly } from "./constants";
-import { updateDailyWeatherData } from "../redux/reducers";
+import { updateCityListData, updateDailyWeatherData } from "../redux/reducers";
 
 //fetch city name on the basis of latitude and logitude.
 export const getCityName = async (
@@ -73,7 +73,7 @@ export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityD
 export const fetchWeatherDataForCity = async (
   cityData: string[],
   cityListData: ICityListData[],
-  setCityListData: React.Dispatch<SetStateAction<ICityListData[]>>,
+  setCityListData: any,
   setLoader: React.Dispatch<SetStateAction<boolean>>
 ) => {
   try {
@@ -93,7 +93,8 @@ export const fetchWeatherDataForCity = async (
     //if error in api response
     if (weatherResponsData?.error) {
       setLoader(false);
-      return setCityListData([...cityListData]);
+      // return setCityListData([...cityListData]);
+      return setCityListData(updateCityListData([...cityListData]));
     }
 
     const temperature = weatherResponsData?.current_weather?.temperature;
@@ -115,8 +116,9 @@ export const fetchWeatherDataForCity = async (
     }, []);
 
     const reversed = [...removeSameObjects, prepareCityData]?.reverse()
-
-    setCityListData([...reversed]);
+    console.log("reversed" ,reversed)
+    // setCityListData([...reversed]);
+    setCityListData(updateCityListData([...reversed]));
     setLoader(false);
   } catch (error) {
     console.log("fetchWeatherDataForCity: something went wrong ", error);
