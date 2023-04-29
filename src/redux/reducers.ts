@@ -51,6 +51,6 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData } = weatherSlice.actions;
+export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

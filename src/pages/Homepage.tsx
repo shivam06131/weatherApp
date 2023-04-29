@@ -13,62 +13,52 @@ import CityCardContainer from "../components/CityCardContainer";
 import { list } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  updateCityListData,
   updateSelectedCriteriaData,
 } from "../redux/reducers";
 
 const Homepage = () => {
   //header component data
-  const [searchText, setSearchText] = useState<string>("");
   const [debouncedSearchText, setDebouncedSearchText] = useState<string[]>([]);
-  //for second card
+  //for second card (initial data when criteria chananges)
   const [customisedData, setCustomisedData] = useState<number>(0);
+  console.log("customisedData",customisedData)
   //loader
   const [loader, setLoader] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-
-
-  const storeDailyWeatherData = useSelector(
-    (state: any) => state.dailyWeatherData
-  );
-  const storeSelectedTime = useSelector((state: any) => state.selectedTime);
-  const storeSelectedCriteria = useSelector(
-    (state: any) => state.selectedCriteria
-  );
-  const storeSelectedCriteriaData = useSelector(
-    (state: any) => state.selectedCriteriaData
-  );
-  const storeCityListData = useSelector(
-    (state: any) => state.cityListData
-  );
+  //Redux
+  const {
+    dailyWeatherData : storeDailyWeatherData,
+    selectedTime : storeSelectedTime,
+    selectedCriteria: storeSelectedCriteria,
+    selectedCriteriaData: storeSelectedCriteriaData,
+    cityListData: storeCityListData,
+    searchText: storeSearchText,
+  } = useSelector((state: any) => state);
 
   //Debouncing
   useEffect(() => {
-    searchText?.length > 0 && setLoader(true);
+    storeSearchText?.length > 0 && setLoader(true);
     const getData = setTimeout(() => {
       if (
-        searchText &&
-        searchText !== debouncedSearchText[debouncedSearchText?.length - 1]
+        storeSearchText &&
+        storeSearchText !== debouncedSearchText[debouncedSearchText?.length - 1]
       ) {
-        setDebouncedSearchText([...debouncedSearchText, searchText]);
+        setDebouncedSearchText([...debouncedSearchText, storeSearchText]);
       } else {
         setLoader(false);
       }
     }, 2000);
     //clearing event (junk event)
     return () => clearTimeout(getData);
-  }, [searchText]);
-
+  }, [storeSearchText]);
 
   //featch weather for city
   useEffect(() => {
-    if (searchText !== "" && debouncedSearchText?.includes(searchText)) {
+    if (storeSearchText !== "" && debouncedSearchText?.includes(storeSearchText)) {
       fetchWeatherDataForCity(
         debouncedSearchText,
-        // cityListData,
         storeCityListData,
-        // setCityListData,
         dispatch,
         setLoader
       );
@@ -77,7 +67,10 @@ const Homepage = () => {
 
   // update localstorage
   useEffect(() => {
-    localStorage.setItem("cityListData", JSON.stringify([...storeCityListData]));
+    localStorage.setItem(
+      "cityListData",
+      JSON.stringify([...storeCityListData])
+    );
   }, [storeCityListData]);
 
   //to create and udpate the second customSelect data.
@@ -100,20 +93,10 @@ const Homepage = () => {
     setCustomisedData(filterdData?.[0]?.temperature);
   }, [storeSelectedTime, storeSelectedCriteriaData]);
 
-  //creating props
-  const createSearchAppBarProps = () => {
-    return {
-      searchText,
-      setSearchText,
-    };
-  };
-
-  const propData = createSearchAppBarProps();
-
   return (
     <div>
       <div style={{ paddingBottom: "50px" }}>
-        <Header propData={propData} />
+        <Header/>
         <Typography
           color="text.secondary"
           style={{ textAlign: "center", paddingTop: "15px" }}
@@ -124,12 +107,7 @@ const Homepage = () => {
         <CustomCard />
         <CustomisedCardContainer customisedData={customisedData} list={list} />
       </div>
-      {loader ? (
-        <CustomPopup />
-      ) : (
-        <CityCardContainer
-        />
-      )}
+      {loader ? <CustomPopup /> : <CityCardContainer />}
     </div>
   );
 };
