@@ -53,7 +53,7 @@ export interface ICityCardContainer {
 export interface ICustomisedCardContainerProps {
   // selectedCriteriaData: IdailyWeatherData[];
   customisedData: string | number;
-  list: string[];
+  // list: string[];
 }
 
 export interface ICityCardProps {

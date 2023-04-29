@@ -6,14 +6,13 @@ import CustomSelect from "./CustomSelect";
 import { updateSelectedCriteria, updateSelectedTime } from "../redux/reducers";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
+import { list } from "../utils";
 
 const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
   const [criteriaChanged, setCriteriaChanged] = useState(true);
   const {
-    list,
     customisedData,
   } = props;
-
 
   const dispatch = useAppDispatch();
   const storeSelectedTime = useSelector((state : any) => state.selectedTime);

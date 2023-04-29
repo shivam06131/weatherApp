@@ -24,9 +24,9 @@ const Homepage = () => {
   console.log("customisedData",customisedData)
   //loader
   const [loader, setLoader] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
+  
   //Redux
+  const dispatch = useDispatch();
   const {
     dailyWeatherData : storeDailyWeatherData,
     selectedTime : storeSelectedTime,
@@ -53,7 +53,7 @@ const Homepage = () => {
     return () => clearTimeout(getData);
   }, [storeSearchText]);
 
-  //featch weather for city
+  //fetch weather for city
   useEffect(() => {
     if (storeSearchText !== "" && debouncedSearchText?.includes(storeSearchText)) {
       fetchWeatherDataForCity(
@@ -73,7 +73,7 @@ const Homepage = () => {
     );
   }, [storeCityListData]);
 
-  //to create and udpate the second customSelect data.
+  //to create and update the second customSelect data.
   useEffect(() => {
     const criteriaSpecificData = handleSelctionCriteria(
       storeSelectedCriteria,
@@ -83,13 +83,13 @@ const Homepage = () => {
       dispatch(updateSelectedCriteriaData([...(criteriaSpecificData as [])]));
   }, [storeSelectedCriteria]);
 
+  //creating placeholder data when criteria changes
   useEffect(() => {
     const filterdData: IdailyWeatherData[] = storeSelectedCriteriaData
       ?.slice(0, 24)
       ?.filter((item: IdailyWeatherData) =>
         item?.time?.includes(storeSelectedTime)
       );
-
     setCustomisedData(filterdData?.[0]?.temperature);
   }, [storeSelectedTime, storeSelectedCriteriaData]);
 
@@ -105,7 +105,7 @@ const Homepage = () => {
           Live Data
         </Typography>
         <CustomCard />
-        <CustomisedCardContainer customisedData={customisedData} list={list} />
+        <CustomisedCardContainer customisedData={customisedData} />
       </div>
       {loader ? <CustomPopup /> : <CityCardContainer />}
     </div>

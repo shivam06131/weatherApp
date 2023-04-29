@@ -78,8 +78,8 @@ export const fetchWeatherDataForCity = async (
 ) => {
   try {
     const currentCity = cityData[cityData.length - 1];
+    
     //fetch cordinates of the searched city
-
     const cityCordinatesData = await cityCordinatesInfo(currentCity);
     const latitude = cityCordinatesData?.results?.[0]?.geometry?.lat;
     const longitude = cityCordinatesData?.results?.[0]?.geometry?.lng;

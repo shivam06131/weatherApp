@@ -14,7 +14,7 @@ export const customisedCardComponent: ICustomisedCardContainerProps = {
   // ],
   // selectedTime: "",
   customisedData: "29.38",
-  list: ["Today", "Tomorrow", "Daily", "Weekly"],
+  // list: ["Today", "Tomorrow", "Daily", "Weekly"],
   // setDailyWeatherData: jest.fn(),
   // setSelectedCriteria: jest.fn(),
   // setSelectedTime: jest.fn(),
