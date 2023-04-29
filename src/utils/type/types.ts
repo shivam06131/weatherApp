@@ -51,14 +51,9 @@ export interface ICityCardContainer {
   setCityListData: React.Dispatch<SetStateAction<ICityListData[]>>;
 }
 export interface ICustomisedCardContainerProps {
-  // selectedCriteria: string;
-  selectedCriteriaData: IdailyWeatherData[];
-  // selectedTime: string;
+  // selectedCriteriaData: IdailyWeatherData[];
   customisedData: string | number;
   list: string[];
-  // setSelectedCriteria: React.Dispatch<SetStateAction<string>>;
-  // setSelectedTime: React.Dispatch<SetStateAction<string>>;
-  // setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
 }
 
 export interface ICityCardProps {

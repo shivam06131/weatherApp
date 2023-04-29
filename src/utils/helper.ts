@@ -223,37 +223,30 @@ export const evaluateWeeklyBasedData = (dailyWeatherData: any) => {
 
 export const handleSelctionCriteria = (
   selectedCriteria: string,
-  setSelectedCriteriaData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>,
   dailyWeatherData: IdailyWeatherData[]
 ) => {
-  console.log("🚀 ~ file: helper.ts:196 ~ selectedCriteria:", dailyWeatherData)
   switch (selectedCriteria) {
     case ISelectedCriteria.Today:
-      setSelectedCriteriaData(
-        evaluateTodayAndTomorrowData(dailyWeatherData, 0, 24)
-      );
-      break;
+         return evaluateTodayAndTomorrowData(dailyWeatherData, 0, 24)
     case ISelectedCriteria.Tomorrow:
       const data = evaluateTodayAndTomorrowData(dailyWeatherData, 24, 48);
-      setSelectedCriteriaData([...data]);
-      break;
+      return [...data]
     case ISelectedCriteria.Daily:
       const { dailyData, date } = evaluateDailyBasedData(dailyWeatherData);
-      setSelectedCriteriaData([
+      return [
         ...date?.map((item, index) => {
           return { time: item, temperature: dailyData[index] };
         }),
-      ]);
-      break;
+      ]
 
     case ISelectedCriteria.Weekly:
       let weeklyData = evaluateWeeklyBasedData(dailyWeatherData);
-      setSelectedCriteriaData([
+
+      return [
         ...weekly?.map((item, index) => {
           return { time: item, temperature: weeklyData[index] };
         }),
-      ]);
-      break;
+      ]
 
     default:
       break;

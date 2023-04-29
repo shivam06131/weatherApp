@@ -12,9 +12,8 @@ import CustomisedCardContainer from "../components/CustomisedCardContainer";
 import CustomPopup from "../components/CustomPopup";
 import CityCardContainer from "../components/CityCardContainer";
 import { list } from "../utils";
-import { useAppDispatch } from "../redux/store";
-import { updateDailyWeatherData } from "../redux/reducers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSelectedCriteriaData } from "../redux/reducers";
 
 const Homepage = () => {
   //header component data
@@ -24,25 +23,21 @@ const Homepage = () => {
   const [dailyWeatherData, setDailyWeatherData] = useState<IdailyWeatherData[]>(
     []
   );
-  const [selectedTime, setSelectedTime] = useState<string>("");
   //for second card
   const [customisedData, setCustomisedData] = useState<number>(0);
-  //for the dorpdown
-  const [selectedCriteria, setSelectedCriteria] = useState<string>("");
-  const [selectedCriteriaData, setSelectedCriteriaData] = useState<
-    IdailyWeatherData[]
-  >([]);
   //city wise data
   const [cityListData, setCityListData] = useState<ICityListData[]>([ 
     ...(JSON.parse(localStorage.getItem("cityListData") as string) ?? []),
   ]);
   //loader
   const [loader, setLoader] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   //redux
   const weatherData = useSelector((state : any) => state.dailyWeatherData);
   const storeSelectedTime = useSelector((state : any) => state.selectedTime);
   const storeSelectedCriteria = useSelector((state : any) => state.selectedCriteria);
+  const storeSelectedCriteriaData = useSelector((state : any) => state.selectedCriteriaData);
   
   
   useEffect(() => {
@@ -85,20 +80,20 @@ const Homepage = () => {
 
   //to create and udpate the second customSelect data.
   useEffect(() => {
-    handleSelctionCriteria(
-      storeSelectedCriteria,
-      setSelectedCriteriaData,
+   const criteriaSpecificData =  handleSelctionCriteria(
+    storeSelectedCriteria,
       dailyWeatherData
     );
+    criteriaSpecificData && dispatch(updateSelectedCriteriaData([...criteriaSpecificData as []]))
   }, [storeSelectedCriteria]);
 
   useEffect(() => {
-    const filterdData: IdailyWeatherData[] = selectedCriteriaData
+    const filterdData: IdailyWeatherData[] = storeSelectedCriteriaData
       ?.slice(0, 24)
       ?.filter((item: IdailyWeatherData) => item?.time?.includes(storeSelectedTime));
 
     setCustomisedData(filterdData?.[0]?.temperature);
-  }, [storeSelectedTime, selectedCriteriaData]);
+  }, [storeSelectedTime, storeSelectedCriteriaData]);
 
   //creating props
   const createSearchAppBarProps = () => {
@@ -123,12 +118,6 @@ const Homepage = () => {
         <CustomCard
         />
         <CustomisedCardContainer
-          // selectedCriteria={storeSelectedCriteria}
-          // setSelectedCriteria={setSelectedCriteria}
-          selectedCriteriaData={selectedCriteriaData}
-          // selectedTime={storeSelectedTime}
-          // setSelectedTime={setSelectedTime}
-          // setDailyWeatherData={setDailyWeatherData}
           customisedData={customisedData}
           list={list}
         />

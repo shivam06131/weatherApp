@@ -9,15 +9,8 @@ import { useSelector } from "react-redux";
 
 const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
   const [criteriaChanged, setCriteriaChanged] = useState(true);
-  console.log("asdfasfdasc" ,criteriaChanged)
   const {
     list,
-    // selectedCriteria,
-    // setSelectedCriteria,
-    selectedCriteriaData,
-    // selectedTime,
-    // setSelectedTime,
-    // setDailyWeatherData,
     customisedData,
   } = props;
 
@@ -25,9 +18,9 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
   const dispatch = useAppDispatch();
   const storeSelectedTime = useSelector((state : any) => state.selectedTime);
   const storeSelectedCriteria = useSelector((state : any) => state.selectedCriteria);
+  const storeSelectedCriteriaData = useSelector((state : any) => state.selectedCriteriaData);
 
   useEffect(() => {
-    console.log("criteriaChanged",criteriaChanged)
     criteriaChanged && dispatch(updateSelectedTime(''))
   },[storeSelectedCriteria])
 
@@ -44,7 +37,6 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
         <CustomSelect
           data={list}
           setVariable={storeSelectedCriteria}
-          // setterFunction={setSelectedCriteria}
           inputCategory="Criteria"
           filteringCriteria="Criteria"
           setCriteriaChanged={setCriteriaChanged}
@@ -62,17 +54,15 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
               sx={{ paddingRight: "30px", height: "56px" }}
               variant="outlined"
               onClick={() => {
-                // setSelectedCriteria("");
                 dispatch(updateSelectedCriteria("")); 
               }}
             >
               Remove Card
             </Button>
             <CustomSelect
-              data={selectedCriteriaData}
+              data={storeSelectedCriteriaData}
               setVariable={storeSelectedTime}
-              // setterFunction={setSelectedTime}
-              filteringCriteria={selectedCriteriaData?.[0]?.time}
+              filteringCriteria={storeSelectedCriteriaData?.[0]?.time}
               setCriteriaChanged={setCriteriaChanged}
             />
           </div>
@@ -80,8 +70,6 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
       </div>
       {storeSelectedCriteria && (
         <CustomCard
-          // setDailyWeatherData={setDailyWeatherData}
-          // dailyWeatherData={selectedCriteriaData}
           isCustomised={Boolean(customisedData)}
           customisedData={customisedData as string}
         />

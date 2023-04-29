@@ -1,18 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IdailyWeatherData } from '../utils/type/types';
+import { IdailyWeatherData} from '../utils/type/types';
 
 interface WeatherState {
   value: number;
   dailyWeatherData: IdailyWeatherData[],
   selectedCriteria: string,
   selectedTime: string,
+  selectedCriteriaData: IdailyWeatherData[],
 }
 
 const initialState: WeatherState = {
   value: 0,
   dailyWeatherData: [{ temperature: 0, time: '' }],
   selectedCriteria: '',
-  selectedTime: ''
+  selectedTime: '',
+  selectedCriteriaData: [{
+    time : '',
+    temperature: 0
+  }]
 };
 
 export const weatherSlice = createSlice({
@@ -27,11 +32,13 @@ export const weatherSlice = createSlice({
     },
     updateSelectedTime: (state, action : PayloadAction<string>) => {
       state.selectedTime = action.payload;
-
+    },
+    updateSelectedCriteriaData: (state, action : PayloadAction<IdailyWeatherData[]>) => {
+      state.selectedCriteriaData = action.payload;
     }
   },
 });
 
-export const { updateDailyWeatherData,updateSelectedCriteria,updateSelectedTime } = weatherSlice.actions;
+export const { updateDailyWeatherData,updateSelectedCriteria,updateSelectedTime,updateSelectedCriteriaData } = weatherSlice.actions;
 
 export default weatherSlice.reducer;
