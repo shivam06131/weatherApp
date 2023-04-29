@@ -69,6 +69,7 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
       </div>
       {storeSelectedCriteria && (
         <CustomCard
+        criteriaChanged={criteriaChanged}
           isCustomised={Boolean(customisedData)}
           customisedData={customisedData as string}
         />

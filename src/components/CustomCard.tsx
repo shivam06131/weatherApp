@@ -31,11 +31,13 @@ const CustomCard = (props: ICustomCardProps) => {
     latitude: 0,
     longitude: 0,
   });
+  console.log("currentWeather", currentWeather);
   const [cityName, setCityName] = useState<ICityDataMapped>({
     country: "",
     district: "",
     suburb: "",
   });
+  console.log("cityName", cityName);
 
   //redux
   const storeCustomCityInfo: ICustomCityInfo = useSelector(
@@ -43,8 +45,8 @@ const CustomCard = (props: ICustomCardProps) => {
   );
   const dispatch = useAppDispatch();
 
-  const fetchWeatherDataWrapper = () => {
-    if (storeCustomCityInfo?.isCustomCityEnabled) {
+  const fetchWeatherDataWrapper = (refetch: boolean = false) => {
+    if (props?.isCustomised && storeCustomCityInfo?.isCustomCityEnabled) {
       const localCordinates = {
         latitude: storeCustomCityInfo?.latitude ?? 0,
         longitude: storeCustomCityInfo?.longitude ?? 0,
@@ -53,7 +55,8 @@ const CustomCard = (props: ICustomCardProps) => {
         localCordinates,
         setCurrentWeather,
         currentWeather,
-        dispatch
+        dispatch,
+        storeCustomCityInfo?.isCustomCityEnabled
       );
     } else {
       cordinates.latitude !== 0 &&
@@ -61,7 +64,9 @@ const CustomCard = (props: ICustomCardProps) => {
           cordinates,
           setCurrentWeather,
           currentWeather,
-          dispatch
+          dispatch,
+          !storeCustomCityInfo?.isCustomCityEnabled,
+          refetch
         );
     }
   };
@@ -72,10 +77,10 @@ const CustomCard = (props: ICustomCardProps) => {
 
   useEffect(() => {
     fetchWeatherDataWrapper();
-    //To fetch Live data
-    // setInterval(() => {
-    // fetchWeatherDataWrapper();
-    // }, 10000);
+    // To fetch Live data
+    setInterval(() => {
+      fetchWeatherDataWrapper(true);
+    }, 10000);
   }, [cordinates, storeCustomCityInfo]);
 
   return (
@@ -108,16 +113,28 @@ const CustomCard = (props: ICustomCardProps) => {
                 alignItems={"center"}
               >
                 <CustomTypography
-                  condition={Boolean(cityName?.suburb)}
-                  typegraphyData={cityName?.suburb}
+                  condition={Boolean(
+                    storeCustomCityInfo?.isCustomCityEnabled &&
+                      props?.isCustomised
+                      ? (storeCustomCityInfo?.currentCity as string)
+                      : cityName?.suburb
+                  )}
+                  typegraphyData={
+                    storeCustomCityInfo?.isCustomCityEnabled &&
+                    props?.isCustomised
+                      ? (storeCustomCityInfo?.currentCity as string)
+                      : cityName?.suburb
+                  }
                   typegraphystyles={{ fontSize: 26 }}
                   loaderHeightWidth={"35"}
                 />
+                {/* VIST  */}
                 <CustomTypography
                   condition={Boolean(currentWeather?.currentTemperature)}
                   typegraphyData={
-                    props?.isCustomised
-                      ? (props?.customisedData as string)
+                    props?.isCustomised && storeCustomCityInfo
+                      ? // storeCustomCityInfo?.isCustomCityEnabled && props.criteriaChanged ? currentWeather?.currentTemperature :
+                        (props?.customisedData as string)
                       : currentWeather?.currentTemperature
                   }
                   temperatureData={currentWeather?.unit || ""}
@@ -133,29 +150,59 @@ const CustomCard = (props: ICustomCardProps) => {
               </Typography>
               <CustomTypography
                 condition={Boolean(Number(currentWeather?.latitude))}
-                typegraphyData={`latitude ${Number(
-                  currentWeather?.latitude
-                )?.toFixed(2)}`}
+                typegraphyData={
+                  storeCustomCityInfo.isCustomCityEnabled
+                    ? `latitude ${Number(
+                        storeCustomCityInfo.latitude ?? 0
+                      )?.toFixed(2)}`
+                    : `latitude ${Number(currentWeather?.latitude)?.toFixed(2)}`
+                }
                 typegraphystyles={{ mb: 0.5 }}
                 loaderHeightWidth={"40"}
               />
               <CustomTypography
                 condition={Boolean(Number(currentWeather?.longitude))}
-                typegraphyData={`longitude ${Number(
-                  currentWeather?.longitude
-                )?.toFixed(2)}`}
+                typegraphyData={
+                  storeCustomCityInfo.isCustomCityEnabled
+                    ? `longitude ${Number(
+                        storeCustomCityInfo.longitude ?? 0
+                      )?.toFixed(2)}`
+                    : `longitude ${Number(currentWeather?.longitude)?.toFixed(
+                        2
+                      )}`
+                }
                 typegraphystyles={{ mb: 0.5 }}
                 loaderHeightWidth={"40"}
               />
               <CustomTypography
-                condition={Boolean(cityName?.country)}
-                typegraphyData={cityName?.country}
+                condition={Boolean(
+                  storeCustomCityInfo?.isCustomCityEnabled &&
+                    props?.isCustomised
+                    ? (storeCustomCityInfo?.Country as string)
+                    : cityName?.country
+                )}
+                typegraphyData={
+                  storeCustomCityInfo?.isCustomCityEnabled &&
+                  props?.isCustomised
+                    ? (storeCustomCityInfo?.Country as string)
+                    : cityName?.country
+                }
                 typegraphystyles={{ fontSize: 36, mt: 1.5, mb: 0 }}
                 loaderHeightWidth={"50"}
               />
               <CustomTypography
-                condition={Boolean(cityName?.district)}
-                typegraphyData={cityName?.district}
+                condition={Boolean(
+                  storeCustomCityInfo?.isCustomCityEnabled &&
+                    props?.isCustomised
+                    ? (storeCustomCityInfo?.stateDistrict as string)
+                    : cityName?.district
+                )}
+                typegraphyData={
+                  storeCustomCityInfo?.isCustomCityEnabled &&
+                  props?.isCustomised
+                    ? (storeCustomCityInfo?.stateDistrict as string)
+                    : cityName?.district
+                }
                 typegraphystyles={{ mb: 1.5, fontSize: 16 }}
                 loaderHeightWidth={"50"}
               />

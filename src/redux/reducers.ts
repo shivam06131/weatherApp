@@ -35,6 +35,7 @@ export const weatherSlice = createSlice({
   initialState,
   reducers: {
     updateDailyWeatherData: (state, action: PayloadAction<IdailyWeatherData[]>) => {
+      console.log("action?.payload",action?.payload)
       state.dailyWeatherData = [ ...action?.payload];
     },
     updateSelectedCriteria: (state, action: PayloadAction<string>) => {

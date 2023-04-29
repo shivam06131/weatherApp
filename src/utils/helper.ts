@@ -14,7 +14,7 @@ export const getCityName = async (
 ) => {
   try {
     const data = await fetchCityName({ latitude, longitude });
-    const mappedData = mapAPIData(data , WeatherCity.City)
+    const mappedData = mapAPIData(data, WeatherCity.City)
     setCityName({ ...cityName, ...mappedData });
   } catch (error) {
     console.log("getCityName: something went wrong ", error);
@@ -26,17 +26,21 @@ export const fetchWeatherData = async (
   cordinates: Icordinates,
   setCurrentWeather: React.Dispatch<SetStateAction<IWeatherDataMapped>>,
   currentWeather: IWeatherDataMapped,
-  dispatch?: any
+  dispatch?: any,
+  isCustomDataEnabled: boolean = false,
+  refetch: boolean = false,
 ) => {
   try {
     const data = await allWeatherData(cordinates, 16);
-    console.log("data", data)
-    const mappedAPIData = mapAPIData(data , WeatherCity.Weather)
-    setCurrentWeather({ ...currentWeather, ...mappedAPIData });
-    if (dispatch) {
-      const reformatedData : IdailyWeatherData[]  = reformatTimeWiseWeather(data);
-      console.log("reformatedData" ,reformatedData)
-      dispatch(updateDailyWeatherData([...reformatedData]));
+    const mappedAPIData = mapAPIData(data, WeatherCity.Weather)
+    //@ts-ignore
+    // if (currentWeather?.currentTemperature !== mappedAPIData?.currentTemperature) {
+      setCurrentWeather({ ...currentWeather, ...mappedAPIData });
+    // }
+    //only update this when custom is true for second card (and for first if it is false)
+    if (isCustomDataEnabled && !refetch) {
+      const reformatedData: IdailyWeatherData[] = reformatTimeWiseWeather(data);
+      !refetch && dispatch(updateDailyWeatherData([...reformatedData]));
     }
   } catch (error) {
     console.log("fetchWeatherData: something went wrong ", error);
@@ -45,7 +49,7 @@ export const fetchWeatherData = async (
 
 //format weather data
 export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityDataMapped => {
-  let reformatedData : IWeatherDataMapped | ICityDataMapped;
+  let reformatedData: IWeatherDataMapped | ICityDataMapped;
   if (type === WeatherCity.Weather) {
     const { current_weather, hourly, latitude, longitude, hourly_units } = data;
     reformatedData = {
@@ -65,12 +69,12 @@ export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityD
     }
   }
   //@ts-ignore
-  console.log("reformatedData" , reformatedData)
+  console.log("reformatedData", reformatedData)
   //@ts-ignore
   return reformatedData;
 }
 
-//fetch city lat & lon and after that fetch wetather data
+//fetch city lat & lon and after that fetch weather data
 export const fetchWeatherDataForCity = async (
   cityData: string[],
   cityListData: ICityListData[],
@@ -79,7 +83,7 @@ export const fetchWeatherDataForCity = async (
 ) => {
   try {
     const currentCity = cityData[cityData.length - 1];
-    
+
     //fetch cordinates of the searched city
     const cityCordinatesData = await cityCordinatesInfo(currentCity);
     const latitude = cityCordinatesData?.results?.[0]?.geometry?.lat;
@@ -117,7 +121,7 @@ export const fetchWeatherDataForCity = async (
     }, []);
 
     const reversed = [...removeSameObjects, prepareCityData]?.reverse()
-    console.log("reversed" ,reversed)
+    console.log("reversed", reversed)
     // setCityListData([...reversed]);
     setCityListData(updateCityListData([...reversed]));
     setLoader(false);
@@ -126,7 +130,7 @@ export const fetchWeatherDataForCity = async (
   }
 };
 
-//get users current location cordinates (latitude & longiture)
+//get users current location cordinates (latitude & longitude)
 export const getCurrentLocation = (
   cityName: any,
   setCityName: any,
@@ -228,9 +232,10 @@ export const handleSelctionCriteria = (
   selectedCriteria: string,
   dailyWeatherData: IdailyWeatherData[]
 ) => {
+  console.log("dailyWeatherData", dailyWeatherData)
   switch (selectedCriteria) {
     case ISelectedCriteria.Today:
-         return evaluateTodayAndTomorrowData(dailyWeatherData, 0, 24)
+      return evaluateTodayAndTomorrowData(dailyWeatherData, 0, 24)
     case ISelectedCriteria.Tomorrow:
       const data = evaluateTodayAndTomorrowData(dailyWeatherData, 24, 48);
       return [...data]

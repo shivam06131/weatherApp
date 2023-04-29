@@ -26,6 +26,7 @@ export interface IPropData {
 export interface ICustomCardProps {
   isCustomised?: boolean;
   customisedData?: string;
+  criteriaChanged?: boolean;
 }
 
 export interface IdailyWeatherData {

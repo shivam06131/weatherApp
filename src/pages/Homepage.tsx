@@ -82,9 +82,9 @@ const Homepage = () => {
     );
     criteriaSpecificData &&
       dispatch(updateSelectedCriteriaData([...(criteriaSpecificData as [])]));
-  }, [storeSelectedCriteria]);
+  }, [storeSelectedCriteria,storeDailyWeatherData]);
 
-  //creating placeholder data when criteria changes
+  //creating card data to be shown (for customised card)
   useEffect(() => {
     const filterdData: IdailyWeatherData[] = storeSelectedCriteriaData
       ?.slice(0, 24)
@@ -105,7 +105,7 @@ const Homepage = () => {
         >
           Live Data
         </Typography>
-        <CustomCard />
+        <CustomCard   isCustomised={false} />
         <CustomisedCardContainer customisedData={customisedData} />
       </div>
       {loader ? <CustomPopup /> : <CityCardContainer />}
