@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ICity, ICityCardContainer } from "../utils/type/types";
+import React from "react";
+import { ICity } from "../utils/type/types";
 import { Button, Grid, Typography } from "@mui/material";
 import CityCard from "./CityCard";
 import { useDispatch, useSelector } from "react-redux";

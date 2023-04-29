@@ -6,7 +6,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { ICustomHeaderProps } from "../utils/type/types";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSearchText } from "../redux/reducers";

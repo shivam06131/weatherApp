@@ -5,12 +5,11 @@ import Typography from "@mui/material/Typography";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import AcUnitSharpIcon from "@mui/icons-material/AcUnitSharp";
 import CustomTypography from "./CustomTypography";
-import { ICity, ICityCardProps, ICustomCityInfo } from "../utils/type";
+import { ICityCardProps, ICustomCityInfo } from "../utils/type";
 import { Button } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateCustomCityInfo } from "../redux/reducers";
-import { useEffect } from 'react';
 
 function CityCard(props: ICityCardProps) {
   const dispatch = useDispatch();

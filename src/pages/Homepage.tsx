@@ -3,14 +3,13 @@ import {
   fetchWeatherDataForCity,
   handleSelctionCriteria,
 } from "../utils/helper";
-import { ICityListData, IdailyWeatherData } from "../utils/type/types";
+import {  IdailyWeatherData } from "../utils/type/types";
 import Header from "../components/Header";
 import { Typography } from "@mui/material";
 import CustomCard from "../components/CustomCard";
 import CustomisedCardContainer from "../components/CustomisedCardContainer";
 import CustomPopup from "../components/CustomPopup";
 import CityCardContainer from "../components/CityCardContainer";
-import { list } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateSelectedCriteriaData,

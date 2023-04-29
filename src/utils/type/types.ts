@@ -24,8 +24,6 @@ export interface IPropData {
 }
 
 export interface ICustomCardProps {
-  // setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
-  // dailyWeatherData: IdailyWeatherData[];
   isCustomised?: boolean;
   customisedData?: string;
 }
@@ -51,9 +49,7 @@ export interface ICityCardContainer {
   setCityListData: React.Dispatch<SetStateAction<ICityListData[]>>;
 }
 export interface ICustomisedCardContainerProps {
-  // selectedCriteriaData: IdailyWeatherData[];
   customisedData: string | number;
-  // list: string[];
 }
 
 export interface ICityCardProps {

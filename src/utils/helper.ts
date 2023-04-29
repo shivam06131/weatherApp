@@ -148,7 +148,7 @@ export const getCurrentLocation = (
   });
 };
 
-//reformat data
+//reformat data in [{time: '', temperature: 0}]
 export const reformatTimeWiseWeather = (weather: any) => {
   let counterIndex: number = 0;
   return weather?.hourly?.temperature_2m?.reduce(
