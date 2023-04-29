@@ -92,3 +92,7 @@ export interface IWeatherDataMapped {
   latitude: number,
   longitude: number,
 }
+
+export interface ICustomCityInfo extends ICity {
+  isCustomCityEnabled : boolean,
+}

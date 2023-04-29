@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICityListData, IdailyWeatherData } from '../utils/type/types';
+import { ICity, ICityListData, ICustomCityInfo, IdailyWeatherData } from '../utils/type/types';
 
 interface WeatherState {
   value: number;
@@ -8,7 +8,8 @@ interface WeatherState {
   selectedTime: string,
   selectedCriteriaData: IdailyWeatherData[],
   cityListData: ICityListData[],
-  searchText: string
+  searchText: string,
+  customCityInfo: ICustomCityInfo,
 }
 
 const initialState: WeatherState = {
@@ -23,7 +24,10 @@ const initialState: WeatherState = {
   cityListData: [...[
     ...(JSON.parse(localStorage.getItem("cityListData") as string) ?? []),
   ]],
-  searchText: ''
+  searchText: '',
+  customCityInfo: {
+    isCustomCityEnabled: false,
+  }
 };
 
 export const weatherSlice = createSlice({
@@ -31,7 +35,7 @@ export const weatherSlice = createSlice({
   initialState,
   reducers: {
     updateDailyWeatherData: (state, action: PayloadAction<IdailyWeatherData[]>) => {
-      state.dailyWeatherData = [...state.dailyWeatherData, ...action?.payload];
+      state.dailyWeatherData = [ ...action?.payload];
     },
     updateSelectedCriteria: (state, action: PayloadAction<string>) => {
       state.selectedCriteria = action.payload;
@@ -47,10 +51,13 @@ export const weatherSlice = createSlice({
     },
     updateSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
-    }
+    },
+    updateCustomCityInfo: (state, action: PayloadAction<ICustomCityInfo>) => {
+      state.customCityInfo = action.payload;
+    },
   },
 });
 
-export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText } = weatherSlice.actions;
+export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText ,updateCustomCityInfo} = weatherSlice.actions;
 
 export default weatherSlice.reducer;

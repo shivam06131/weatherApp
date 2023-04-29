@@ -3,11 +3,31 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import AcUnitSharpIcon from '@mui/icons-material/AcUnitSharp';
+import AcUnitSharpIcon from "@mui/icons-material/AcUnitSharp";
 import CustomTypography from "./CustomTypography";
-import { ICityCardProps } from "../utils/type";
+import { ICity, ICityCardProps, ICustomCityInfo } from "../utils/type";
+import { Button } from "@mui/material";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCustomCityInfo } from "../redux/reducers";
+import { useEffect } from 'react';
 
 function CityCard(props: ICityCardProps) {
+  const dispatch = useDispatch();
+  const handleCustomCityInfo = () => {
+    const customCityInfo: ICustomCityInfo = {
+      currentCity: props?.city?.currentCity,
+      temperature: props?.city?.temperature,
+      latitude: props?.city?.latitude,
+      longitude: props?.city?.longitude,
+      stateDistrict: props?.city?.stateDistrict,
+      Country: props?.city?.Country,
+      isCustomCityEnabled: true,
+    };
+
+    dispatch(updateCustomCityInfo(customCityInfo));
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <Card sx={{ minWidth: 275, backgroundColor: "#BA90C6", height: "auto" }}>
@@ -70,6 +90,13 @@ function CityCard(props: ICityCardProps) {
             typegraphystyles={{ mb: 1.5, fontSize: 16 }}
             loaderHeightWidth={"50"}
           />
+          <Button
+            variant="outlined"
+            startIcon={<AutoAwesomeIcon />}
+            onClick={handleCustomCityInfo}
+          >
+            Get Customised Data
+          </Button>
         </CardContent>
       </Card>
     </div>

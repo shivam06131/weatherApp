@@ -75,6 +75,8 @@ const Homepage = () => {
 
   //to create and update the second customSelect data.
   useEffect(() => {
+    console.log("storeSelectedCriteria" ,storeSelectedCriteria)
+    console.log("storeDailyWeatherData" ,storeDailyWeatherData)
     const criteriaSpecificData = handleSelctionCriteria(
       storeSelectedCriteria,
       storeDailyWeatherData

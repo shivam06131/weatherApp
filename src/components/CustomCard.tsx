@@ -9,11 +9,13 @@ import CustomTypography from "./CustomTypography";
 import {
   ICityDataMapped,
   ICustomCardProps,
+  ICustomCityInfo,
   IWeatherDataMapped,
   Icordinates,
 } from "../utils/type/types";
 import { fetchWeatherData, getCurrentLocation } from "../utils/helper";
 import { useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
 
 const CustomCard = (props: ICustomCardProps) => {
   const [cordinates, setCordinates] = useState<Icordinates>({
@@ -36,29 +38,45 @@ const CustomCard = (props: ICustomCardProps) => {
   });
 
   //redux
+  const storeCustomCityInfo: ICustomCityInfo = useSelector(
+    (state: any) => state?.customCityInfo
+  );
   const dispatch = useAppDispatch();
+
   const fetchWeatherDataWrapper = () => {
-    cordinates.latitude !== 0 &&
+    if (storeCustomCityInfo?.isCustomCityEnabled) {
+      const localCordinates = {
+        latitude: storeCustomCityInfo?.latitude ?? 0,
+        longitude: storeCustomCityInfo?.longitude ?? 0,
+      };
       fetchWeatherData(
-        cordinates,
+        localCordinates,
         setCurrentWeather,
         currentWeather,
         dispatch
       );
+    } else {
+      cordinates.latitude !== 0 &&
+        fetchWeatherData(
+          cordinates,
+          setCurrentWeather,
+          currentWeather,
+          dispatch
+        );
+    }
   };
 
   useEffect(() => {
     getCurrentLocation(cityName, setCityName, cordinates, setCordinates);
   }, []);
 
-
   useEffect(() => {
     fetchWeatherDataWrapper();
     //To fetch Live data
     // setInterval(() => {
-    fetchWeatherDataWrapper();
+    // fetchWeatherDataWrapper();
     // }, 10000);
-  }, [cordinates]);
+  }, [cordinates, storeCustomCityInfo]);
 
   return (
     <div style={{ textAlign: "center" }}>

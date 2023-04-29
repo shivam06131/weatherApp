@@ -35,6 +35,7 @@ export const fetchWeatherData = async (
     setCurrentWeather({ ...currentWeather, ...mappedAPIData });
     if (dispatch) {
       const reformatedData : IdailyWeatherData[]  = reformatTimeWiseWeather(data);
+      console.log("reformatedData" ,reformatedData)
       dispatch(updateDailyWeatherData([...reformatedData]));
     }
   } catch (error) {
