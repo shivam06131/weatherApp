@@ -1,7 +1,7 @@
 import { ICustomisedCardContainerProps } from "../type";
 
 export const customisedCardComponent: ICustomisedCardContainerProps = {
-  selectedCriteria: "Weekly",
+  // selectedCriteria: "Weekly",
   selectedCriteriaData: [
     {
       time: "Week 1",
@@ -12,10 +12,10 @@ export const customisedCardComponent: ICustomisedCardContainerProps = {
       temperature: 34.4,
     },
   ],
-  selectedTime: "",
+  // selectedTime: "",
   customisedData: "29.38",
   list: ["Today", "Tomorrow", "Daily", "Weekly"],
-  setDailyWeatherData: jest.fn(),
-  setSelectedCriteria: jest.fn(),
-  setSelectedTime: jest.fn(),
+  // setDailyWeatherData: jest.fn(),
+  // setSelectedCriteria: jest.fn(),
+  // setSelectedTime: jest.fn(),
 };

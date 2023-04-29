@@ -4,6 +4,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ICustomSelectProps } from "../utils/type/types";
 import { list } from "../utils";
+import { useAppDispatch } from "../redux/store";
+import { updateSelectedCriteria, updateSelectedTime } from "../redux/reducers";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,7 +20,7 @@ const MenuProps = {
 
 const CustomSelect = (props: ICustomSelectProps) => {
   const {
-    setterFunction,
+    // setterFunction,
     setVariable,
     filteringCriteria,
     data,
@@ -37,13 +39,15 @@ const CustomSelect = (props: ICustomSelectProps) => {
       return false;
     }
   };
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: any) => {
     const {
       target: { value },
-    } = event;
+    } = event;  
     evaluateIfCriteriaChanged(value);
-    setterFunction(value);
+    // setterFunction(value);
+    inputCategory === "Criteria" ? dispatch(updateSelectedCriteria(value)) : dispatch(updateSelectedTime(value))
   };
 
   return (

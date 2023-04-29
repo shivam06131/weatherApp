@@ -13,5 +13,5 @@ export const customSelectPropsMock : ICustomSelectProps = {
   ],
   setVariable: "",
   filteringCriteria: "Week 1",
-  setterFunction : jest.fn(),
+  // setterFunction : jest.fn(),
 };

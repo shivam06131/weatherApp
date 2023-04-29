@@ -13,6 +13,7 @@ import {
   Icordinates,
 } from "../utils/type/types";
 import { fetchWeatherData, getCurrentLocation } from "../utils/helper";
+import { useAppDispatch } from "../redux/store";
 
 const CustomCard = (props: ICustomCardProps) => {
   const [cordinates, setCordinates] = useState<Icordinates>({
@@ -34,19 +35,22 @@ const CustomCard = (props: ICustomCardProps) => {
     suburb: "",
   });
 
-  useEffect(() => {
-    getCurrentLocation(cityName, setCityName, cordinates, setCordinates);
-  }, []);
-
+  //redux
+  const dispatch = useAppDispatch();
   const fetchWeatherDataWrapper = () => {
     cordinates.latitude !== 0 &&
       fetchWeatherData(
         cordinates,
         setCurrentWeather,
         currentWeather,
-        props.setDailyWeatherData
+        dispatch
       );
   };
+
+  useEffect(() => {
+    getCurrentLocation(cityName, setCityName, cordinates, setCordinates);
+  }, []);
+
 
   useEffect(() => {
     fetchWeatherDataWrapper();

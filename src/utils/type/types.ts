@@ -24,8 +24,8 @@ export interface IPropData {
 }
 
 export interface ICustomCardProps {
-  setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
-  dailyWeatherData: IdailyWeatherData[];
+  // setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
+  // dailyWeatherData: IdailyWeatherData[];
   isCustomised?: boolean;
   customisedData?: string;
 }
@@ -43,7 +43,7 @@ export interface ICustomSelectProps {
   haveCriteriaChanged?: boolean;
   selectTwo?: boolean;
   setHavecriteriaChanged?: React.Dispatch<SetStateAction<boolean>>;
-  setterFunction: any;
+  // setterFunction: any;
   setCriteriaChanged?: React.Dispatch<SetStateAction<boolean>>;
 }
 export interface ICityCardContainer {
@@ -51,14 +51,14 @@ export interface ICityCardContainer {
   setCityListData: React.Dispatch<SetStateAction<ICityListData[]>>;
 }
 export interface ICustomisedCardContainerProps {
-  selectedCriteria: string;
+  // selectedCriteria: string;
   selectedCriteriaData: IdailyWeatherData[];
-  selectedTime: string;
+  // selectedTime: string;
   customisedData: string | number;
   list: string[];
-  setSelectedCriteria: React.Dispatch<SetStateAction<string>>;
-  setSelectedTime: React.Dispatch<SetStateAction<string>>;
-  setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
+  // setSelectedCriteria: React.Dispatch<SetStateAction<string>>;
+  // setSelectedTime: React.Dispatch<SetStateAction<string>>;
+  // setDailyWeatherData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>;
 }
 
 export interface ICityCardProps {

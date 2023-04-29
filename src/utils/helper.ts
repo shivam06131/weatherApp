@@ -3,6 +3,7 @@ import { allWeatherData, cityCordinatesInfo, fetchCityName } from "./Api";
 import { ICityDataMapped, ICityListData, IWeatherDataMapped, Icordinates, IdailyWeatherData } from "./type/types";
 import { ISelectedCriteria, WeatherCity } from "./type";
 import { weekly } from "./constants";
+import { updateDailyWeatherData } from "../redux/reducers";
 
 //fetch city name on the basis of latitude and logitude.
 export const getCityName = async (
@@ -25,16 +26,16 @@ export const fetchWeatherData = async (
   cordinates: Icordinates,
   setCurrentWeather: React.Dispatch<SetStateAction<IWeatherDataMapped>>,
   currentWeather: IWeatherDataMapped,
-  setDailyWeatherData?: React.Dispatch<SetStateAction<IdailyWeatherData[]>>
+  dispatch?: any
 ) => {
   try {
     const data = await allWeatherData(cordinates, 16);
     console.log("data", data)
     const mappedAPIData = mapAPIData(data , WeatherCity.Weather)
     setCurrentWeather({ ...currentWeather, ...mappedAPIData });
-    if (setDailyWeatherData) {
-      const reformatedData = reformatTimeWiseWeather(data);
-      setDailyWeatherData([...reformatedData]);
+    if (dispatch) {
+      const reformatedData : IdailyWeatherData[]  = reformatTimeWiseWeather(data);
+      dispatch(updateDailyWeatherData([...reformatedData]));
     }
   } catch (error) {
     console.log("fetchWeatherData: something went wrong ", error);
@@ -225,7 +226,7 @@ export const handleSelctionCriteria = (
   setSelectedCriteriaData: React.Dispatch<SetStateAction<IdailyWeatherData[]>>,
   dailyWeatherData: IdailyWeatherData[]
 ) => {
-  // console.log("🚀 ~ file: helper.ts:196 ~ selectedCriteria:", selectedCriteria)
+  console.log("🚀 ~ file: helper.ts:196 ~ selectedCriteria:", dailyWeatherData)
   switch (selectedCriteria) {
     case ISelectedCriteria.Today:
       setSelectedCriteriaData(
