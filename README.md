@@ -12,6 +12,8 @@ Using functional programming with React and passing setter functions to helper f
 
 In the deployed version of the React application, I have *disabled the use of developer tools*, which is considered a good practice in production environments. Additionally, I have written *unit test cases* for both the helper functions and React components, with an overall *coverage of more than 80%* for all criteria. By ensuring comprehensive test coverage and disabling developer tools, *I have improved the stability, security, and performance of the application*, which is critical in a production environment.
 
+Also i’ve added one ***script*** if you don’t have node and npm installed in you local machine you can just *run that script and that will install node and npm* both.
+
 ---
 
 How to Use➖ (with link) 
@@ -48,4 +50,19 @@ npm run test:coverage
 
 //for perticular file
 npm run test:coverage -- <filename> || <file relative path>
+```
+
+To run script
+
+```jsx
+//To give necessary permission
+chmod +x ./scripts/setup.sh
+
+//To run the script
+sh ./scripts/setup.sh
+
+**dummy output**
+*setting up required softwares/dependencies
+log: Node already installed v16.13.2
+log: npm already installed -v9.4.1*
 ```
