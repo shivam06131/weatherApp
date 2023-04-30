@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICity, ICityListData, ICustomCityInfo, IdailyWeatherData } from '../utils/type/types';
+import { ICity, ICityListData, Icordinates, ICustomCityInfo, IdailyWeatherData } from '../utils/type/types';
 
 interface WeatherState {
   value: number;
@@ -11,6 +11,7 @@ interface WeatherState {
   searchText: string,
   customCityInfo: ICustomCityInfo,
   debouncedSearchText: string[],
+  customCityInfoLastLatitudeLongitude : Icordinates
 }
 
 const initialState: WeatherState = {
@@ -29,7 +30,11 @@ const initialState: WeatherState = {
   customCityInfo: {
     isCustomCityEnabled: false,
   },
-  debouncedSearchText:[]
+  debouncedSearchText:[],
+  customCityInfoLastLatitudeLongitude : {
+    latitude : 0,
+    longitude: 0,
+  }
 };
 
 export const weatherSlice = createSlice({
@@ -55,14 +60,17 @@ export const weatherSlice = createSlice({
       state.searchText = action.payload;
     },
     updateCustomCityInfo: (state, action: PayloadAction<ICustomCityInfo>) => {
-      state.customCityInfo = action.payload;
+      state.customCityInfo = {...action.payload};
     },
     updateDebouncedSearchText: (state, action: PayloadAction<string[]>) => {
       state.debouncedSearchText = action.payload;
     },
+    updateCustomCityInfoLastLatitudeLongitude: (state, action: PayloadAction<Icordinates>) => {
+      state.customCityInfoLastLatitudeLongitude = {...action.payload};
+    },
   },
 });
 
-export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText ,updateCustomCityInfo, updateDebouncedSearchText} = weatherSlice.actions;
+export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText ,updateCustomCityInfo, updateDebouncedSearchText, updateCustomCityInfoLastLatitudeLongitude} = weatherSlice.actions;
 
 export default weatherSlice.reducer;

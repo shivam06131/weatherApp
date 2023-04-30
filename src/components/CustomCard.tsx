@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -16,6 +16,7 @@ import {
 import { fetchWeatherData, getCurrentLocation } from "../utils/helper";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
+import AcUnitSharpIcon from "@mui/icons-material/AcUnitSharp";
 
 const CustomCard = (props: ICustomCardProps) => {
   const [cordinates, setCordinates] = useState<Icordinates>({
@@ -31,25 +32,30 @@ const CustomCard = (props: ICustomCardProps) => {
     latitude: 0,
     longitude: 0,
   });
-  console.log("currentWeather", currentWeather);
   const [cityName, setCityName] = useState<ICityDataMapped>({
     country: "",
     district: "",
     suburb: "",
   });
-  console.log("cityName", cityName);
 
   //redux
   const storeCustomCityInfo: ICustomCityInfo = useSelector(
     (state: any) => state?.customCityInfo
-  );
-  const dispatch = useAppDispatch();
-
+    );
+    const dispatch = useAppDispatch();
+    //to get accurate data inside 
+    const latestCustomCityLocalInfo = useRef<ICustomCityInfo>(storeCustomCityInfo);
+    
+  //updating ref (to get the live data inside the setInterval)
+  useEffect(() => {
+    latestCustomCityLocalInfo.current = storeCustomCityInfo;
+  }, [storeCustomCityInfo]);
+  
   const fetchWeatherDataWrapper = (refetch: boolean = false) => {
     if (props?.isCustomised && storeCustomCityInfo?.isCustomCityEnabled) {
       const localCordinates = {
-        latitude: storeCustomCityInfo?.latitude ?? 0,
-        longitude: storeCustomCityInfo?.longitude ?? 0,
+        latitude: latestCustomCityLocalInfo.current?.latitude ?? 0,
+        longitude: latestCustomCityLocalInfo.current?.longitude ?? 0,
       };
       fetchWeatherData(
         localCordinates,
@@ -132,7 +138,7 @@ const CustomCard = (props: ICustomCardProps) => {
                 <CustomTypography
                   condition={Boolean(currentWeather?.currentTemperature)}
                   typegraphyData={
-                    props?.isCustomised   
+                    props?.isCustomised
                       ? // storeCustomCityInfo?.isCustomCityEnabled && props.criteriaChanged ? currentWeather?.currentTemperature :
                         (props?.customisedData as string)
                       : currentWeather?.currentTemperature
@@ -146,12 +152,22 @@ const CustomCard = (props: ICustomCardProps) => {
                 />
               </Box>
               <Typography variant="body2" sx={{ mb: 4 }}>
-                <WbSunnyIcon sx={{ height: 75, width: 75, color: "orange" }} />
+                {(props?.isCustomised
+                  ? (Number(props?.customisedData) as number)
+                  : currentWeather?.currentTemperature) < 15 ? (
+                  <AcUnitSharpIcon
+                    sx={{ height: 75, width: 75, color: "skyblue" }}
+                  />
+                ) : (
+                  <WbSunnyIcon
+                    sx={{ height: 75, width: 75, color: "orange" }}
+                  />
+                )}
               </Typography>
               <CustomTypography
                 condition={Boolean(Number(currentWeather?.latitude))}
                 typegraphyData={
-                  storeCustomCityInfo.isCustomCityEnabled
+                  props?.isCustomised && storeCustomCityInfo.isCustomCityEnabled
                     ? `latitude ${Number(
                         storeCustomCityInfo.latitude ?? 0
                       )?.toFixed(2)}`
@@ -163,7 +179,7 @@ const CustomCard = (props: ICustomCardProps) => {
               <CustomTypography
                 condition={Boolean(Number(currentWeather?.longitude))}
                 typegraphyData={
-                  storeCustomCityInfo.isCustomCityEnabled
+                  props?.isCustomised && storeCustomCityInfo.isCustomCityEnabled
                     ? `longitude ${Number(
                         storeCustomCityInfo.longitude ?? 0
                       )?.toFixed(2)}`

@@ -10,6 +10,7 @@ import { Button, styled } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCustomCityInfo } from "../redux/reducers";
+import { useState } from "react";
 
 const StyledButton = styled(Button)`
   background-color: #f7e1ae;
@@ -32,8 +33,7 @@ function CityCard(props: ICityCardProps) {
       Country: props?.city?.Country,
       isCustomCityEnabled: true,
     };
-
-    dispatch(updateCustomCityInfo(customCityInfo));
+    dispatch(updateCustomCityInfo({...customCityInfo}));
   };
   const storeSelectedCriteria = useSelector(
     (state: any) => state.selectedCriteria
