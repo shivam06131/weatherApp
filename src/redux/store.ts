@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import rootReducer from './reducers';
 
 const store = configureStore({
-  reducer : rootReducer
+  reducer : rootReducer,
+  //disable dev tool in production
+  devTools : false,
 });
 
 export type AppDispatch = typeof store.dispatch;
