@@ -3,14 +3,16 @@ import { ICity } from "../utils/type/types";
 import { Button, Grid, Typography } from "@mui/material";
 import CityCard from "./CityCard";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCityListData } from "../redux/reducers";
+import {
+  updateCityListData,
+  updateCustomCityInfo,
+  updateDebouncedSearchText,
+} from "../redux/reducers";
 
 const CityCardContainer = () => {
-const dispatch  = useDispatch()
+  const dispatch = useDispatch();
 
-const storeCityListData = useSelector(
-  (state: any) => state.cityListData
-);
+  const storeCityListData = useSelector((state: any) => state.cityListData);
 
   return (
     <div>
@@ -35,8 +37,18 @@ const storeCityListData = useSelector(
             variant="outlined"
             style={{ padding: "0px 15px", height: "56px" }}
             onClick={() => {
-              dispatch(updateCityListData([]))
+              //clearing city data
+              dispatch(updateCityListData([]));
+              //clearing localstorage
               localStorage.removeItem("cityListData");
+              //clearing custom city
+              dispatch(
+                updateCustomCityInfo({
+                  isCustomCityEnabled: false,
+                })
+              );
+              //clearing searched texts
+              dispatch(updateDebouncedSearchText([]));
             }}
           >
             Clear
@@ -53,7 +65,7 @@ const storeCityListData = useSelector(
             justifyContent: "space-around",
             backgroundColor: "#FEF2F4",
             padding: "30px 0px",
-            width: "100%"
+            width: "100%",
           }}
         >
           {storeCityListData?.map((city: ICity) => {

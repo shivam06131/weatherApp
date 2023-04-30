@@ -58,7 +58,7 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#BA90C6" }}>
-        <Toolbar>
+        <Toolbar style={{display : "flex", flexWrap : "wrap"}} >
           <Typography
             variant="h6"
             noWrap
@@ -70,13 +70,14 @@ const Header = () => {
                 sm: "block",
                 display: "flex !important",
                 alignItems: "center !important",
+                margin : "10px 0px"
               },
             }}
           >
             <CloudIcon  sx={{pr : "10px"}} />
             Weather
           </Typography>
-          <Search>
+          <Search style={{margin : "10px 0px"}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

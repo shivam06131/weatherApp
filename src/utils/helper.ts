@@ -3,7 +3,7 @@ import { allWeatherData, cityCordinatesInfo, fetchCityName } from "./Api";
 import { ICityDataMapped, ICityListData, IWeatherDataMapped, Icordinates, IdailyWeatherData } from "./type/types";
 import { ISelectedCriteria, WeatherCity } from "./type";
 import { weekly } from "./constants";
-import { updateCityListData, updateDailyWeatherData } from "../redux/reducers";
+import { updateCityListData, updateDailyWeatherData, updateSearchText } from "../redux/reducers";
 
 //fetch city name on the basis of latitude and logitude.
 export const getCityName = async (
@@ -76,10 +76,11 @@ export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityD
 export const fetchWeatherDataForCity = async (
   cityData: string[],
   cityListData: ICityListData[],
-  setCityListData: any,
+  dispatch: any,
   setLoader: React.Dispatch<SetStateAction<boolean>>
 ) => {
   try {
+    console.log("citydata" , cityData)
     const currentCity = cityData[cityData.length - 1];
 
     //fetch cordinates of the searched city
@@ -97,7 +98,7 @@ export const fetchWeatherDataForCity = async (
     if (weatherResponsData?.error) {
       setLoader(false);
       // return setCityListData([...cityListData]);
-      return setCityListData(updateCityListData([...cityListData]));
+      return dispatch(updateCityListData([...cityListData]));
     }
 
     const temperature = weatherResponsData?.current_weather?.temperature;
@@ -109,6 +110,7 @@ export const fetchWeatherDataForCity = async (
       latitude,
       currentCity,
     };
+    console.log("cityListData",cityListData)
     //to fix multiple same city card.
     const removeSameObjects = cityListData?.reduce((last: any, curr: any) => {
       if (curr?.currentCity?.toLowerCase()?.trim() === currentCity?.toLowerCase()?.trim()) {
@@ -120,7 +122,8 @@ export const fetchWeatherDataForCity = async (
 
     const reversed = [...removeSameObjects, prepareCityData]?.reverse()
     // setCityListData([...reversed]);
-    setCityListData(updateCityListData([...reversed]));
+    dispatch(updateCityListData([...reversed]));
+    dispatch(updateSearchText(''));
     setLoader(false);
   } catch (error) {
     console.log("fetchWeatherDataForCity: something went wrong ", error);

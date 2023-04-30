@@ -12,12 +12,11 @@ import CustomPopup from "../components/CustomPopup";
 import CityCardContainer from "../components/CityCardContainer";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  updateDebouncedSearchText,
   updateSelectedCriteriaData,
 } from "../redux/reducers";
 
 const Homepage = () => {
-  //header component data
-  const [debouncedSearchText, setDebouncedSearchText] = useState<string[]>([]);
   //for second card (initial data when criteria chananges)
   const [customisedData, setCustomisedData] = useState<number>(0);
   console.log("customisedData",customisedData)
@@ -33,6 +32,7 @@ const Homepage = () => {
     selectedCriteriaData: storeSelectedCriteriaData,
     cityListData: storeCityListData,
     searchText: storeSearchText,
+    debouncedSearchText: storeDebouncedSearchText,
   } = useSelector((state: any) => state);
 
   //Debouncing
@@ -41,9 +41,9 @@ const Homepage = () => {
     const getData = setTimeout(() => {
       if (
         storeSearchText &&
-        storeSearchText !== debouncedSearchText[debouncedSearchText?.length - 1]
+        storeSearchText !== storeDebouncedSearchText[storeDebouncedSearchText?.length - 1]
       ) {
-        setDebouncedSearchText([...debouncedSearchText, storeSearchText]);
+        dispatch(updateDebouncedSearchText([...storeDebouncedSearchText, storeSearchText]));
       } else {
         setLoader(false);
       }
@@ -54,15 +54,15 @@ const Homepage = () => {
 
   //fetch weather for city
   useEffect(() => {
-    if (storeSearchText !== "" && debouncedSearchText?.includes(storeSearchText)) {
+    if (storeSearchText !== "" && storeDebouncedSearchText?.includes(storeSearchText)) {
       fetchWeatherDataForCity(
-        debouncedSearchText,
+        storeDebouncedSearchText,
         storeCityListData,
         dispatch,
         setLoader
       );
     }
-  }, [debouncedSearchText]);
+  }, [storeDebouncedSearchText]);
 
   // update localstorage
   useEffect(() => {

@@ -10,6 +10,7 @@ interface WeatherState {
   cityListData: ICityListData[],
   searchText: string,
   customCityInfo: ICustomCityInfo,
+  debouncedSearchText: string[],
 }
 
 const initialState: WeatherState = {
@@ -28,7 +29,7 @@ const initialState: WeatherState = {
   customCityInfo: {
     isCustomCityEnabled: false,
   },
-  
+  debouncedSearchText:[]
 };
 
 export const weatherSlice = createSlice({
@@ -56,10 +57,12 @@ export const weatherSlice = createSlice({
     updateCustomCityInfo: (state, action: PayloadAction<ICustomCityInfo>) => {
       state.customCityInfo = action.payload;
     },
- 
+    updateDebouncedSearchText: (state, action: PayloadAction<string[]>) => {
+      state.debouncedSearchText = action.payload;
+    },
   },
 });
 
-export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText ,updateCustomCityInfo} = weatherSlice.actions;
+export const { updateDailyWeatherData, updateSelectedCriteria, updateSelectedTime, updateSelectedCriteriaData, updateCityListData, updateSearchText ,updateCustomCityInfo, updateDebouncedSearchText} = weatherSlice.actions;
 
 export default weatherSlice.reducer;

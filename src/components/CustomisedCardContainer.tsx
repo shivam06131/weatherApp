@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import CustomCard from "./CustomCard";
 import { ICustomisedCardContainerProps } from "../utils/type/types";
 import CustomSelect from "./CustomSelect";
-import { updateSelectedCriteria, updateSelectedTime } from "../redux/reducers";
+import {
+  updateCustomCityInfo,
+  updateSelectedCriteria,
+  updateSelectedTime,
+} from "../redux/reducers";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import { list } from "../utils";
@@ -11,7 +15,7 @@ import { list } from "../utils";
 const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
   const [criteriaChanged, setCriteriaChanged] = useState(true);
   const { customisedData } = props;
-  
+
   const dispatch = useAppDispatch();
   const storeSelectedTime = useSelector((state: any) => state.selectedTime);
   const storeSelectedCriteria = useSelector(
@@ -56,6 +60,11 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
               variant="outlined"
               onClick={() => {
                 dispatch(updateSelectedCriteria(""));
+                dispatch(
+                  updateCustomCityInfo({
+                    isCustomCityEnabled: false,
+                  })
+                );
               }}
             >
               Remove Card

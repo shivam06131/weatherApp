@@ -6,10 +6,19 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import AcUnitSharpIcon from "@mui/icons-material/AcUnitSharp";
 import CustomTypography from "./CustomTypography";
 import { ICityCardProps, ICustomCityInfo } from "../utils/type";
-import { Button } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCustomCityInfo } from "../redux/reducers";
+
+const StyledButton = styled(Button)`
+  background-color: #f7e1ae;
+  color: black;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #dae3fd;
+  }
+`;
 
 function CityCard(props: ICityCardProps) {
   const dispatch = useDispatch();
@@ -26,6 +35,9 @@ function CityCard(props: ICityCardProps) {
 
     dispatch(updateCustomCityInfo(customCityInfo));
   };
+  const storeSelectedCriteria = useSelector(
+    (state: any) => state.selectedCriteria
+  );
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -89,13 +101,15 @@ function CityCard(props: ICityCardProps) {
             typegraphystyles={{ mb: 1.5, fontSize: 16 }}
             loaderHeightWidth={"50"}
           />
-          <Button
-            variant="outlined"
-            startIcon={<AutoAwesomeIcon />}
-            onClick={handleCustomCityInfo}
-          >
-            Get Customised Data
-          </Button>
+          {storeSelectedCriteria && (
+            <StyledButton
+              variant="outlined"
+              startIcon={<AutoAwesomeIcon />}
+              onClick={handleCustomCityInfo}
+            >
+              Get Customised Data
+            </StyledButton>
+          )}
         </CardContent>
       </Card>
     </div>
