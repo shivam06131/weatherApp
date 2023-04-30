@@ -132,7 +132,7 @@ const CustomCard = (props: ICustomCardProps) => {
                 <CustomTypography
                   condition={Boolean(currentWeather?.currentTemperature)}
                   typegraphyData={
-                    props?.isCustomised && storeCustomCityInfo
+                    props?.isCustomised   
                       ? // storeCustomCityInfo?.isCustomCityEnabled && props.criteriaChanged ? currentWeather?.currentTemperature :
                         (props?.customisedData as string)
                       : currentWeather?.currentTemperature

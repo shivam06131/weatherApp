@@ -27,7 +27,8 @@ const initialState: WeatherState = {
   searchText: '',
   customCityInfo: {
     isCustomCityEnabled: false,
-  }
+  },
+  
 };
 
 export const weatherSlice = createSlice({
@@ -35,7 +36,6 @@ export const weatherSlice = createSlice({
   initialState,
   reducers: {
     updateDailyWeatherData: (state, action: PayloadAction<IdailyWeatherData[]>) => {
-      console.log("action?.payload",action?.payload)
       state.dailyWeatherData = [ ...action?.payload];
     },
     updateSelectedCriteria: (state, action: PayloadAction<string>) => {
@@ -56,6 +56,7 @@ export const weatherSlice = createSlice({
     updateCustomCityInfo: (state, action: PayloadAction<ICustomCityInfo>) => {
       state.customCityInfo = action.payload;
     },
+ 
   },
 });
 

@@ -69,8 +69,6 @@ export const mapAPIData = (data: any, type: string): IWeatherDataMapped | ICityD
     }
   }
   //@ts-ignore
-  console.log("reformatedData", reformatedData)
-  //@ts-ignore
   return reformatedData;
 }
 
@@ -121,7 +119,6 @@ export const fetchWeatherDataForCity = async (
     }, []);
 
     const reversed = [...removeSameObjects, prepareCityData]?.reverse()
-    console.log("reversed", reversed)
     // setCityListData([...reversed]);
     setCityListData(updateCityListData([...reversed]));
     setLoader(false);
@@ -232,7 +229,6 @@ export const handleSelctionCriteria = (
   selectedCriteria: string,
   dailyWeatherData: IdailyWeatherData[]
 ) => {
-  console.log("dailyWeatherData", dailyWeatherData)
   switch (selectedCriteria) {
     case ISelectedCriteria.Today:
       return evaluateTodayAndTomorrowData(dailyWeatherData, 0, 24)

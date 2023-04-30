@@ -10,18 +10,20 @@ import { list } from "../utils";
 
 const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
   const [criteriaChanged, setCriteriaChanged] = useState(true);
-  const {
-    customisedData,
-  } = props;
-
+  const { customisedData } = props;
+  
   const dispatch = useAppDispatch();
-  const storeSelectedTime = useSelector((state : any) => state.selectedTime);
-  const storeSelectedCriteria = useSelector((state : any) => state.selectedCriteria);
-  const storeSelectedCriteriaData = useSelector((state : any) => state.selectedCriteriaData);
+  const storeSelectedTime = useSelector((state: any) => state.selectedTime);
+  const storeSelectedCriteria = useSelector(
+    (state: any) => state.selectedCriteria
+  );
+  const storeSelectedCriteriaData = useSelector(
+    (state: any) => state.selectedCriteriaData
+  );
 
   useEffect(() => {
-    criteriaChanged && dispatch(updateSelectedTime(''))
-  },[storeSelectedCriteria])
+    criteriaChanged && dispatch(updateSelectedTime(""));
+  }, [storeSelectedCriteria]);
 
   return (
     <div>
@@ -53,7 +55,7 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
               sx={{ paddingRight: "30px", height: "56px" }}
               variant="outlined"
               onClick={() => {
-                dispatch(updateSelectedCriteria("")); 
+                dispatch(updateSelectedCriteria(""));
               }}
             >
               Remove Card
@@ -69,7 +71,7 @@ const CustomisedCardContainer = (props: ICustomisedCardContainerProps) => {
       </div>
       {storeSelectedCriteria && (
         <CustomCard
-        criteriaChanged={criteriaChanged}
+          criteriaChanged={criteriaChanged}
           isCustomised={Boolean(customisedData)}
           customisedData={customisedData as string}
         />
