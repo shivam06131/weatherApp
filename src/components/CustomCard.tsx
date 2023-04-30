@@ -43,7 +43,7 @@ const CustomCard = (props: ICustomCardProps) => {
     (state: any) => state?.customCityInfo
     );
     const dispatch = useAppDispatch();
-    //to get accurate data inside 
+    //to get accurate data inside setInterval
     const latestCustomCityLocalInfo = useRef<ICustomCityInfo>(storeCustomCityInfo);
     
   //updating ref (to get the live data inside the setInterval)

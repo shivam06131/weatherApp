@@ -146,17 +146,17 @@ test("it should properly exicute evaluateWeeklyBasedData", () => {
   expect(functionCall?.length).toEqual(2);
 });
 
-test("it should properly exicute handleSelctionCriteria", () => {
+test("it should properly exicute handleSelectionCriteria", () => {
   // expect(
-  //   handleSelctionCriteria("Today", jest.fn(), dailyWeatherDataMock)
+  //   handleSelectionCriteria("Today", jest.fn(), dailyWeatherDataMock)
   // ).toEqual(undefined);
   // expect(
-  //   handleSelctionCriteria("Tomorrow", jest.fn(), dailyWeatherDataMock)
+  //   handleSelectionCriteria("Tomorrow", jest.fn(), dailyWeatherDataMock)
   // ).toEqual(undefined);
   // expect(
-  //   handleSelctionCriteria("Daily", jest.fn(), dailyWeatherDataMock)
+  //   handleSelectionCriteria("Daily", jest.fn(), dailyWeatherDataMock)
   // ).toEqual(undefined);
   // expect(
-  //   handleSelctionCriteria("Weekly", jest.fn(), dailyWeatherDataMock)
+  //   handleSelectionCriteria("Weekly", jest.fn(), dailyWeatherDataMock)
   // ).toEqual(undefined);
 });

@@ -11,7 +11,6 @@ import {
 
 const CityCardContainer = () => {
   const dispatch = useDispatch();
-
   const storeCityListData = useSelector((state: any) => state.cityListData);
 
   return (

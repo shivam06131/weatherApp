@@ -28,8 +28,6 @@ const CustomSelect = (props: ICustomSelectProps) => {
     setCriteriaChanged,
   } = props;
 
-  // const [criteriaUpdated, setCriteriaUpdated] = useState(true)
-
   const evaluateIfCriteriaChanged = (changeValue: any): boolean => {
     if (list?.includes(changeValue)) {
       setCriteriaChanged?.(true);
@@ -45,9 +43,7 @@ const CustomSelect = (props: ICustomSelectProps) => {
     const {
       target: { value },
     } = event;  
-    console.log("value",value)
     evaluateIfCriteriaChanged(value);
-    // setterFunction(value);
     inputCategory === "Criteria" ? dispatch(updateSelectedCriteria(value)) : dispatch(updateSelectedTime(value))
   };
 

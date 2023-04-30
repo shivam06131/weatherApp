@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   fetchWeatherDataForCity,
-  handleSelctionCriteria,
+  handleSelectionCriteria,
 } from "../utils/helper";
 import {  IdailyWeatherData } from "../utils/type/types";
 import Header from "../components/Header";
@@ -19,7 +19,6 @@ import {
 const Homepage = () => {
   //for second card (initial data when criteria chananges)
   const [customisedData, setCustomisedData] = useState<number>(0);
-  console.log("customisedData",customisedData)
   //loader
   const [loader, setLoader] = useState<boolean>(false);
   
@@ -74,7 +73,7 @@ const Homepage = () => {
 
   //to create and update the second customSelect data.
   useEffect(() => {
-    const criteriaSpecificData = handleSelctionCriteria(
+    const criteriaSpecificData = handleSelectionCriteria(
       storeSelectedCriteria,
       storeDailyWeatherData
     );

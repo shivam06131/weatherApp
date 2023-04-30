@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+### Detailed Description➖
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I have used pure JavaScript *functional programming* in this Assignment to *showcase how much understanding i have of pure React and Javascript (that is quite complicated to implement and understand in first go)*. Functional programming is a programming paradigm that emphasizes the use of functions to create programs. In functional programming, functions are treated as first-class citizens, which means that they can be *passed around just like any other value*.
 
-## Available Scripts
+To make my code more modular and maintainable, I have created and *used helper functions*. Helper functions are typically pure functions that perform a specific task, such as formatting the data according to the need and creating the set of data, etc... By *encapsulating complex logic in helper functions*, I have been able to make my ***code more modular, easier to read and maintain***.
 
-In the project directory, you can run:
+Finally, I have used functional programming in conjunction with React by *passing setter functions as arguments to my helper functions*. This allows me to update the state of my React component in a pure and predictable way, without introducing any side effects. By doing all the business logic with helper functions, I have been able to keep my ***React components clean and focused on rendering***.
 
-### `npm start`
+Using functional programming with React and passing setter functions to helper functions can seem a bit daunting at first, but it's actually an *essential technique for working on complex projects*.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*It might take a little more effort to understand and implement at first*, but by using pure functions and helper functions, you can create a modular, maintainable, and predictable codebase that's *easier to test and debug*  on large, complex projects where code clarity and maintainability are essential.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In the deployed version of the React application, I have *disabled the use of developer tools*, which is considered a good practice in production environments. Additionally, I have written *unit test cases* for both the helper functions and React components, with an overall *coverage of more than 80%* for all criteria. By ensuring comprehensive test coverage and disabling developer tools, *I have improved the stability, security, and performance of the application*, which is critical in a production environment.
 
-### `npm test`
+Also i’ve added one ***script*** if you don’t have node and npm installed in you local machine you can just *run that script and that will install node and npm* both.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+How to Use➖ (with link) 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Redux Version ➖ (with link)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+Commands ➖
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To start
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```graphql
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To run test cases.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```jsx
+//for over all
+npm run test   
 
-## Learn More
+//for perticular file
+npm run test -- <filename> 
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To check test Coverage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```jsx
+//for over all
+npm run test:coverage  
+
+//for perticular file
+npm run test:coverage -- <filename> || <file relative path>
+```
+
+To run script
+
+```jsx
+//To give necessary permission
+chmod +x ./scripts/setup.sh
+
+//To run the script
+sh ./scripts/setup.sh
+
+**dummy output**
+*setting up required softwares/dependencies
+log: Node already installed v16.13.2
+log: npm already installed -v9.4.1*
+```

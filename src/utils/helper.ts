@@ -5,7 +5,7 @@ import { ISelectedCriteria, WeatherCity } from "./type";
 import { weekly } from "./constants";
 import { updateCityListData, updateDailyWeatherData, updateSearchText } from "../redux/reducers";
 
-//fetch city name on the basis of latitude and logitude.
+//fetch city name on the basis of latitude and longitude.
 export const getCityName = async (
   latitude: number,
   longitude: number,
@@ -21,7 +21,7 @@ export const getCityName = async (
   }
 };
 
-//fetch temperature on the basis of latitude and logitude.
+//fetch temperature on the basis of latitude and longitude.
 export const fetchWeatherData = async (
   cordinates: Icordinates,
   setCurrentWeather: React.Dispatch<SetStateAction<IWeatherDataMapped>>,
@@ -80,7 +80,6 @@ export const fetchWeatherDataForCity = async (
   setLoader: React.Dispatch<SetStateAction<boolean>>
 ) => {
   try {
-    console.log("citydata" , cityData)
     const currentCity = cityData[cityData.length - 1];
 
     //fetch cordinates of the searched city
@@ -110,7 +109,6 @@ export const fetchWeatherDataForCity = async (
       latitude,
       currentCity,
     };
-    console.log("cityListData",cityListData)
     //to fix multiple same city card.
     const removeSameObjects = cityListData?.reduce((last: any, curr: any) => {
       if (curr?.currentCity?.toLowerCase()?.trim() === currentCity?.toLowerCase()?.trim()) {
@@ -182,7 +180,7 @@ export const evaluateTodayAndTomorrowData = (
     }
   );
 };
-//evaluates daily bassis data and returns
+//evaluates daily basis data and returns
 export const evaluateDailyBasedData = (dailyWeatherData: any) => {
   let index: number = 0;
   let count: number = 0;
@@ -210,7 +208,7 @@ export const evaluateDailyBasedData = (dailyWeatherData: any) => {
     date,
   };
 };
-//evaluates daily bassis data and returns
+//evaluates daily basis data and returns
 export const evaluateWeeklyBasedData = (dailyWeatherData: any) => {
   let weeklyIndex: number = 0;
   let weeklyCount: number = 0;
@@ -228,7 +226,8 @@ export const evaluateWeeklyBasedData = (dailyWeatherData: any) => {
   }, []);
 };
 
-export const handleSelctionCriteria = (
+//creates data according to the currently selected criteria
+export const handleSelectionCriteria = (
   selectedCriteria: string,
   dailyWeatherData: IdailyWeatherData[]
 ) => {

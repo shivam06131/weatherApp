@@ -32,7 +32,7 @@ function CityCard(props: ICityCardProps) {
       Country: props?.city?.Country,
       isCustomCityEnabled: true,
     };
-    dispatch(updateCustomCityInfo({...customCityInfo}));
+    dispatch(updateCustomCityInfo({ ...customCityInfo }));
   };
   const storeSelectedCriteria = useSelector(
     (state: any) => state.selectedCriteria
