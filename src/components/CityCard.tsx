@@ -45,7 +45,7 @@ function CityCard(props: ICityCardProps) {
           <CustomTypography
             condition={true}
             typegraphyData={`latitude ${
-              Number(props?.city?.latitude)?.toFixed(2) ?? " not available"
+              isNaN(props?.city?.latitude as number) ? " not available" : Number(props?.city?.latitude)?.toFixed(2)
             }`}
             typegraphystyles={{ mb: 0.5 }}
             loaderHeightWidth={"40"}
@@ -53,7 +53,7 @@ function CityCard(props: ICityCardProps) {
           <CustomTypography
             condition={true}
             typegraphyData={`longitude ${
-              Number(props?.city?.longitude)?.toFixed(2) ?? " not available"
+              isNaN(props?.city?.longitude as number) ? " not available" : Number(props?.city?.longitude)?.toFixed(2)
             }`}
             typegraphystyles={{ mb: 0.5 }}
             loaderHeightWidth={"40"}

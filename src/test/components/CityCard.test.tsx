@@ -10,3 +10,16 @@ test("it should render cityCard component without crashing and appropriate data"
   expect(await screen.findByText("Central Delhi")).toBeInTheDocument();
   expect(await screen.findByText("29.8")).toBeInTheDocument();
 });
+test("it should render cityCard component with the optional data", async () => {
+  const updatedPropsMock = {...cityCardPropsMock};
+  //@ts-ignore
+  delete updatedPropsMock.city;
+  render(<CityCard {...updatedPropsMock} />);
+
+
+  expect(await screen.findByText("temp not available")).toBeInTheDocument();
+  expect(await screen.findByText("City not available")).toBeInTheDocument();
+  expect(await screen.findByText("no district found")).toBeInTheDocument();
+  screen.debug()
+
+});
