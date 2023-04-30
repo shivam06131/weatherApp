@@ -25,3 +25,6 @@ else
         npm_version=$(npm -v)
         echo "log: npm installed version -v$npm_version"
 fi
+
+#Installing dependencies
+npm install
