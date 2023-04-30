@@ -62,7 +62,8 @@ const Homepage = () => {
         debouncedSearchText,
         cityListData,
         setCityListData,
-        setLoader
+        setLoader,
+        setSearchText
       );
     }
   }, [debouncedSearchText]);

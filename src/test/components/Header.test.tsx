@@ -10,8 +10,8 @@ import { headerPorpsMock } from "../../utils/mock";
 test("it should Header without crashing", async () => {
   render(<Header {...headerPorpsMock} />);
 
-  expect(await screen.findByText("🌦️Weather")).toBeInTheDocument();
-  const searchBar = await screen.findByPlaceholderText("Search…");
+  expect(await screen.findByText("Weather")).toBeInTheDocument();
+  const searchBar = await screen.findByPlaceholderText("Search City Name...");
   expect(searchBar).toBeInTheDocument();
 
 

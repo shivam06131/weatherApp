@@ -20,6 +20,4 @@ test("it should render cityCard component with the optional data", async () => {
   expect(await screen.findByText("temp not available")).toBeInTheDocument();
   expect(await screen.findByText("City not available")).toBeInTheDocument();
   expect(await screen.findByText("no district found")).toBeInTheDocument();
-  screen.debug()
-
 });

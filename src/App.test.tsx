@@ -24,7 +24,7 @@ beforeEach(() => {
 test("it should render App and it's internal components", async () => {
   render(<App />);
 
-  expect(await screen.findByText('🌦️Weather')).toBeInTheDocument();
+  expect(await screen.findByText('Weather')).toBeInTheDocument();
   expect(await screen.findByText('Live Data')).toBeInTheDocument();
   expect(await screen.findByText('Get Customised Data')).toBeInTheDocument();
   expect(await screen.findByText('Criteria')).toBeInTheDocument();

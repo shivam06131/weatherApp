@@ -43,7 +43,8 @@ export const fetchWeatherDataForCity = async (
   cityData: string[],
   cityListData: ICityListData[],
   setCityListData: React.Dispatch<SetStateAction<ICityListData[]>>,
-  setLoader: React.Dispatch<SetStateAction<boolean>>
+  setLoader: React.Dispatch<SetStateAction<boolean>>,
+  setSearchText?: React.Dispatch<SetStateAction<string>>
 ) => {
   try {
     const currentCity = cityData[cityData.length - 1];
@@ -86,6 +87,7 @@ export const fetchWeatherDataForCity = async (
     const reversed = [...removeSameObjects, prepareCityData]?.reverse()
 
     setCityListData([...reversed]);
+    setSearchText?.("")
     setLoader(false);
   } catch (error) {
     console.log("fetchWeatherDataForCity: something went wrong ", error);
