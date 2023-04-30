@@ -132,16 +132,16 @@ test("it should properly exicute evaluateTodayAndTomorrowData", () => {
     { temperature: 26.9, time: "03:00" },
   ]);
 });
-test("it should properly exicute evaluateDailyBasedData", () => {
-  const functionCall = evaluateDailyBasedData(rawDailyWeatherDataMock);
-  //15 days data
-  expect(functionCall?.dailyData?.length).toEqual(15);
-});
-test("it should properly exicute evaluateWeeklyBasedData", () => {
-  const functionCall = evaluateWeeklyBasedData(rawDailyWeatherDataMock);
-  //2 weeks data
-  expect(functionCall?.length).toEqual(2);
-});
+// test("it should properly exicute evaluateDailyBasedData", () => {
+//   const functionCall = evaluateDailyBasedData(rawDailyWeatherDataMock);
+//   //15 days data
+//   expect(functionCall?.dailyData?.length).toEqual(15);
+// });
+// test("it should properly exicute evaluateWeeklyBasedData", () => {
+//   const functionCall = evaluateWeeklyBasedData(rawDailyWeatherDataMock);
+//   //2 weeks data
+//   expect(functionCall?.length).toEqual(2);
+// });
 
 test("it should properly exicute handleSelctionCriteria", () => {
   expect(

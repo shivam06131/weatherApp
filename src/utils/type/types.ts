@@ -43,7 +43,7 @@ export interface ICustomSelectProps {
   haveCriteriaChanged?: boolean;
   selectTwo?: boolean;
   setHavecriteriaChanged?: React.Dispatch<SetStateAction<boolean>>;
-  setterFunction: any;
+  setterFunction: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<string>>;
   setCriteriaChanged?: React.Dispatch<SetStateAction<boolean>>;
 }
 export interface ICityCardContainer {
@@ -79,6 +79,6 @@ export interface ICityListData {
   currentCity: string;
   latitude: number;
   longitude: number;
-  stateDistrict: string | any;
+  stateDistrict: string;
   temperature: number;
 }

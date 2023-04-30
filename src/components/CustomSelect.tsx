@@ -4,6 +4,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ICustomSelectProps } from "../utils/type/types";
 import { list } from "../utils";
+import { SelectChangeEvent } from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,7 +29,7 @@ const CustomSelect = (props: ICustomSelectProps) => {
 
   // const [criteriaUpdated, setCriteriaUpdated] = useState(true)
 
-  const evaluateIfCriteriaChanged = (changeValue: any): boolean => {
+  const evaluateIfCriteriaChanged = (changeValue: string): boolean => {
     if (list?.includes(changeValue)) {
       setCriteriaChanged?.(true);
       return true;
@@ -38,7 +39,7 @@ const CustomSelect = (props: ICustomSelectProps) => {
     }
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;

@@ -14,7 +14,7 @@ const CustomCard = (props: ICustomCardProps) => {
     latitude: 0,
     longitude: 0,
   });
-  //api data
+  //api based data
   const [currentWeather, setCurrentWeather] = useState<any>({});
   const [cityName, setCityName] = useState<any>({});
 
@@ -35,14 +35,19 @@ const CustomCard = (props: ICustomCardProps) => {
   useEffect(() => {
     fetchWeatherDataWrapper();
     //To fetch Live data
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       fetchWeatherDataWrapper();
     }, 10000);
+
+    //clearing the interval
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [cordinates]);
 
   return (
-    <div style={{ textAlign: "center"  }}>
-      <Grid container spacing={2} style={{ margin: "auto", width : "100%"}}>
+    <div style={{ textAlign: "center" }}>
+      <Grid container spacing={2} style={{ margin: "auto", width: "100%" }}>
         <Grid
           item
           xs={1}
@@ -50,7 +55,7 @@ const CustomCard = (props: ICustomCardProps) => {
           md={3.5}
           lg={4}
           xl={4.5}
-          style={{ height: "auto", width : "100%" }}
+          style={{ height: "auto", width: "100%" }}
         ></Grid>
         <Grid
           item
@@ -62,9 +67,7 @@ const CustomCard = (props: ICustomCardProps) => {
           style={{ height: "auto", paddingLeft: "0px" }}
           sx={{ pl: 0 }}
         >
-          <Card
-            sx={{ backgroundColor: "#dae3fd", height: "auto" }}
-          >
+          <Card sx={{ backgroundColor: "#dae3fd", height: "auto" }}>
             <CardContent>
               <Box
                 display={"flex"}
@@ -88,7 +91,7 @@ const CustomCard = (props: ICustomCardProps) => {
                     currentWeather?.hourly_units?.temperature_2m || ""
                   }
                   additionalProps={{
-                    "gutterBottom": true
+                    gutterBottom: true,
                   }}
                   typegraphystyles={{ fontSize: 36 }}
                   loaderHeightWidth={"50"}

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  evaluateDailyBasedData,
-  evaluateTodayAndTomorrowData,
-  evaluateWeeklyBasedData,
   fetchWeatherDataForCity,
   handleSelctionCriteria,
 } from "../utils/helper";
@@ -26,7 +23,7 @@ const Homepage = () => {
   const [selectedTime, setSelectedTime] = useState<string>("");
   //for second card
   const [customisedData, setCustomisedData] = useState<number>(0);
-  //for the dorpdown
+  //for the dropdown
   const [selectedCriteria, setSelectedCriteria] = useState<string>("");
   const [selectedCriteriaData, setSelectedCriteriaData] = useState<
     IdailyWeatherData[]
@@ -38,7 +35,7 @@ const Homepage = () => {
   //loader
   const [loader, setLoader] = useState<boolean>(false);
 
-  //Debouncing
+  //Debouncing logic
   useEffect(() => {
     searchText?.length > 0 && setLoader(true);
     const getData = setTimeout(() => {
@@ -68,12 +65,12 @@ const Homepage = () => {
     }
   }, [debouncedSearchText]);
 
-  // update localstorage
+  // update localStorage
   useEffect(() => {
     localStorage.setItem("cityListData", JSON.stringify([...cityListData]));
   }, [cityListData]);
 
-  //to create and udpate the second customSelect data.
+  //to create and update the second customSelect data.
   useEffect(() => {
     handleSelctionCriteria(
       selectedCriteria,
@@ -82,6 +79,7 @@ const Homepage = () => {
     );
   }, [selectedCriteria]);
 
+  //to create the data for the second custom card (according to selected criteria).
   useEffect(() => {
     const filterdData: IdailyWeatherData[] = selectedCriteriaData
       ?.slice(0, 24)
@@ -90,7 +88,7 @@ const Homepage = () => {
     setCustomisedData(filterdData?.[0]?.temperature);
   }, [selectedTime, selectedCriteriaData]);
 
-  //creating props
+  //creating props for Header
   const createSearchAppBarProps = () => {
     return {
       searchText,
