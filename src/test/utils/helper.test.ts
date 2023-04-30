@@ -6,7 +6,6 @@ import {
   fetchWeatherDataForCity,
   getCityName,
   getCurrentLocation,
-  handleSelctionCriteria,
 } from "../../utils";
 import * as apiHelperModule from "../../utils/Api/apiHelper";
 import {

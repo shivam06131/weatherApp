@@ -45,7 +45,8 @@
       "node_modules/*",
       "weatherFrontend/src/utils/type",
       "weatherFrontend/src/utils/constants.ts",
-      "weatherFrontend/src/index.tsx"
+      "weatherFrontend/src/index.tsx",
+      "src/index.tsx"
     ]
   },
   "browserslist": {
